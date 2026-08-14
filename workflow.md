@@ -39,7 +39,7 @@ flowchart LR
     classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:3px,color:#FFFFFF
     classDef done fill:#FFFFFF,stroke:#5A5A5A,stroke-width:3px,color:#2E2E2E
 
-    subgraph UP["<span style='font-size:19px;font-weight:700;letter-spacing:1px'>UPSTREAM</span><br/><span style='font-size:14px;color:#5A5A5A'>cadência de produto</span>"]
+    subgraph UP["<span style='font-size:36px;font-weight:800;letter-spacing:3px'>UPSTREAM</span><br/><span style='font-size:17px;color:#5A5A5A'>cadência de produto</span>"]
         direction TB
         EX("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>⓿&nbsp;&nbsp;Exploratório</span><br/><br/><span style='font-size:18px'>Conversas, dados e hipóteses viram matéria-prima para a IA.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Project / Cowork · GitHub</span></span>")
         RN("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>❶&nbsp;&nbsp;Refinamento de Negócio</span><br/><br/><span style='font-size:18px'>O que resolver, para quem, e qual número precisa mudar.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Project / Cowork · GitHub</span></span>")
@@ -52,7 +52,7 @@ flowchart LR
 
     FILA("<span style='display:inline-block;width:300px;text-align:center;line-height:1.5'><span style='font-size:23px;font-weight:700'>Estórias prontas</span><br/><br/><span style='font-size:17px'>Pronto para construir.</span></span>")
 
-    subgraph DOWN["<span style='font-size:19px;font-weight:700;letter-spacing:1px'>DOWNSTREAM</span><br/><span style='font-size:14px;color:#5A5A5A'>cadência de engenharia · N em paralelo</span>"]
+    subgraph DOWN["<span style='font-size:36px;font-weight:800;letter-spacing:3px'>DOWNSTREAM</span><br/><span style='font-size:17px;color:#5A5A5A'>cadência de engenharia · N em paralelo</span>"]
         direction TB
         RT("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>❹&nbsp;&nbsp;Refinamento Técnico</span><br/><br/><span style='font-size:18px'>Como construir, com o contrato entre as stacks fechado antes.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>OpenSpec · Pag-Skills · Claude Code</span></span>")
         IMPL("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>❺&nbsp;&nbsp;Implementação</span><br/><br/><span style='font-size:18px'>Código escrito com o teste antes, em cada stack e em paralelo.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Claude Code · Kotlin / Java · iOS / Android · React</span></span>")

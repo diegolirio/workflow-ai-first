@@ -31,7 +31,7 @@ O sistema é composto por **dois laços que giram em velocidades diferentes**, l
 **A fila é o único acoplamento entre os dois.** O Upstream escreve nela, o Downstream lê. Nenhum lado espera o outro terminar — e é isso que impede o modelo de virar cascata com nome novo.
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"18px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":50,"rankSpacing":120,"padding":26,"useMaxWidth":false}}}%%
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"18px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":50,"rankSpacing":120,"padding":30,"useMaxWidth":false,"subGraphTitleMargin":{"top":18,"bottom":40}}}}%%
 flowchart LR
     classDef up fill:#EEF4F6,stroke:#7FB3C0,stroke-width:3px,color:#2E2E2E
     classDef down fill:#F5F8E9,stroke:#A9C46C,stroke-width:3px,color:#2E2E2E
@@ -41,29 +41,29 @@ flowchart LR
 
     subgraph UP["<span style='font-size:36px;font-weight:800;letter-spacing:3px'>UPSTREAM</span><br/><span style='font-size:17px;color:#5A5A5A'>cadência de produto</span>"]
         direction TB
-        EX("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>⓿&nbsp;&nbsp;Exploratório</span><br/><br/><span style='font-size:18px'>Conversas, dados e hipóteses viram matéria-prima para a IA.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Project / Cowork · GitHub</span></span>")
-        RN("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>❶&nbsp;&nbsp;Refinamento de Negócio</span><br/><br/><span style='font-size:18px'>O que resolver, para quem, e qual número precisa mudar.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Project / Cowork · GitHub</span></span>")
-        TL("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>❷&nbsp;&nbsp;Design de Telas</span><br/><br/><span style='font-size:18px'>Como o cliente vê e usa, em cada plataforma.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Design · GitHub</span></span>")
-        QE("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>❸&nbsp;&nbsp;Quebra em Estórias</span><br/><br/><span style='font-size:18px'>Pedaços pequenos, cada um demonstrável sozinho.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Cowork · GitHub · Jira</span></span>")
+        EX("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>⓿&nbsp;&nbsp;Exploratório</span><br/><br/><span style='font-size:23px'>Conversas, dados e hipóteses viram matéria-prima para a IA.</span></span>")
+        RN("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❶&nbsp;&nbsp;Refinamento de Negócio</span><br/><br/><span style='font-size:23px'>O que resolver, para quem, e qual número precisa mudar.</span></span>")
+        TL("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❷&nbsp;&nbsp;Design de Telas</span><br/><br/><span style='font-size:23px'>Como o cliente vê e usa, em cada plataforma.</span></span>")
+        QE("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❸&nbsp;&nbsp;Quebra em Estórias</span><br/><br/><span style='font-size:23px'>Pedaços pequenos, cada um demonstrável sozinho.</span></span>")
         EX --> RN
         RN -->|"<span style='font-size:14px'>PRD aprovado</span>"| TL
         TL -->|"<span style='font-size:14px'>design aprovado</span>"| QE
     end
 
-    FILA("<span style='display:inline-block;width:300px;text-align:center;line-height:1.5'><span style='font-size:23px;font-weight:700'>Estórias prontas</span><br/><br/><span style='font-size:17px'>Pronto para construir.</span></span>")
+    FILA("<span style='display:inline-block;width:340px;text-align:center;line-height:1.45'><span style='font-size:30px;font-weight:700'>Estórias prontas</span><br/><br/><span style='font-size:22px'>Pronto para construir.</span></span>")
 
     subgraph DOWN["<span style='font-size:36px;font-weight:800;letter-spacing:3px'>DOWNSTREAM</span><br/><span style='font-size:17px;color:#5A5A5A'>cadência de engenharia · N em paralelo</span>"]
         direction TB
-        RT("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>❹&nbsp;&nbsp;Refinamento Técnico</span><br/><br/><span style='font-size:18px'>Como construir, com o contrato entre as stacks fechado antes.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>OpenSpec · Pag-Skills · Claude Code</span></span>")
-        IMPL("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>❺&nbsp;&nbsp;Implementação</span><br/><br/><span style='font-size:18px'>Código escrito com o teste antes, em cada stack e em paralelo.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Claude Code · Kotlin / Java · iOS / Android · React</span></span>")
-        TEST("<span style='display:inline-block;width:430px;text-align:left;line-height:1.5'><span style='font-size:25px;font-weight:700'>❻&nbsp;&nbsp;Spec-Driven Testing</span><br/><br/><span style='font-size:18px'>Prova que faz o que foi pedido e que aguenta o volume previsto.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>TestSpec · Simulador iOS / Android · Playwright · k6</span></span>")
+        RT("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❹&nbsp;&nbsp;Refinamento Técnico</span><br/><br/><span style='font-size:23px'>Como construir, com o contrato entre as stacks fechado antes.</span></span>")
+        IMPL("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❺&nbsp;&nbsp;Implementação</span><br/><br/><span style='font-size:23px'>Código escrito com o teste antes, em cada stack e em paralelo.</span></span>")
+        TEST("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❻&nbsp;&nbsp;Spec-Driven Testing</span><br/><br/><span style='font-size:23px'>Prova que faz o que foi pedido e que aguenta o volume previsto.</span></span>")
         RT -->|"<span style='font-size:14px'>contrato aprovado</span>"| IMPL
         IMPL -->|"<span style='font-size:14px'>integração contínua verde</span>"| TEST
     end
 
-    GR("<span style='display:inline-block;width:340px;text-align:center;line-height:1.5'><span style='font-size:22px;font-weight:700;letter-spacing:1px'>GUARDRAILS</span><br/><br/><span style='font-size:17px'>O que impede a qualidade de depender de disciplina individual.</span></span>")
+    GR("<span style='display:inline-block;width:400px;text-align:center;line-height:1.45'><span style='font-size:30px;font-weight:700;letter-spacing:2px'>GUARDRAILS</span><br/><br/><span style='font-size:22px'>O que impede a qualidade de depender de disciplina individual.</span></span>")
 
-    FIM("<span style='display:inline-block;width:360px;text-align:left;line-height:1.5'><span style='font-size:23px;font-weight:700'>Fechamento</span><br/><br/><span style='font-size:17px'>Spec atualizada, histórico guardado e a métrica cobrada depois.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>GitHub · Jira · Confluence</span></span>")
+    FIM("<span style='display:inline-block;width:420px;text-align:left;line-height:1.45'><span style='font-size:30px;font-weight:700'>Fechamento</span><br/><br/><span style='font-size:22px'>Spec atualizada, histórico guardado e a métrica cobrada depois.</span></span>")
 
     QE -->|"<span style='font-size:14px'>Definition of Ready</span>"| FILA
     FILA --> RT

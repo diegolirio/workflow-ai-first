@@ -309,19 +309,40 @@ Com quatro ou mais stacks em fila, a sequência mataria a agilidade que motivou 
 A ordem `backend → BFF → clientes` vale para **integração e merge**, não para início do trabalho. Sem essa cláusula, a Estória levaria a soma dos tempos das stacks em vez do maior deles.
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"18px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":40,"rankSpacing":130,"padding":26,"useMaxWidth":false}}}%%
 flowchart LR
-    D["design.md<br/>contrato congelado"]
-    D --> B["fase Backend"]
-    D --> BF["fase BFF"]
-    D --> I["fase iOS"]
-    D --> A["fase Android"]
-    D --> P["fase Portal"]
-    B --> M["integração e merge<br/>ordem: backend → BFF → clientes"]
+    classDef down fill:#F5F8E9,stroke:#A9C46C,stroke-width:3px,color:#2E2E2E
+    classDef queue fill:#FDF4C9,stroke:#E3C534,stroke-width:3px,color:#2E2E2E
+    classDef done fill:#FFFFFF,stroke:#5A5A5A,stroke-width:3px,color:#2E2E2E
+
+    D("<span style='display:inline-block;width:400px;text-align:center;line-height:1.45'><span style='font-size:34px;font-weight:700'>Contrato congelado</span><br/><br/><span style='font-size:24px'>Endpoints, payloads e eventos definidos no design, antes de escrever código.</span></span>")
+
+    B("<span style='display:inline-block;width:280px;text-align:center'><span style='font-size:30px;font-weight:700'>Backend</span></span>")
+    BF("<span style='display:inline-block;width:280px;text-align:center'><span style='font-size:30px;font-weight:700'>BFF</span></span>")
+    I("<span style='display:inline-block;width:280px;text-align:center'><span style='font-size:30px;font-weight:700'>iOS</span></span>")
+    A("<span style='display:inline-block;width:280px;text-align:center'><span style='font-size:30px;font-weight:700'>Android</span></span>")
+    P("<span style='display:inline-block;width:280px;text-align:center'><span style='font-size:30px;font-weight:700'>Portal</span></span>")
+
+    M("<span style='display:inline-block;width:400px;text-align:center;line-height:1.45'><span style='font-size:34px;font-weight:700'>Integração e merge</span><br/><br/><span style='font-size:24px'>Nesta ordem: backend, depois BFF, depois clientes.</span></span>")
+    T("<span style='display:inline-block;width:340px;text-align:center'><span style='font-size:32px;font-weight:700'>Spec-Driven Testing</span></span>")
+
+    D --> B
+    D --> BF
+    D --> I
+    D --> A
+    D --> P
+    B --> M
     BF --> M
     I --> M
     A --> M
     P --> M
-    M --> T["Spec-Driven Testing"]
+    M --> T
+
+    class D queue
+    class B,BF,I,A,P down
+    class M done
+    class T down
+    linkStyle default stroke:#5A5A5A,stroke-width:2px
 ```
 
 ### Etapa 5 — Implementação
@@ -371,7 +392,9 @@ Quando a última Estória fecha, a Iniciativa vira `delivered`. Depois de rodar 
 ### Estória
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"20px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E","primaryColor":"#EEF4F6","primaryBorderColor":"#7FB3C0","labelBackgroundColor":"#FFFFFF"},"state":{"useMaxWidth":false,"nodeSpacing":70,"rankSpacing":90}}}%%
 stateDiagram-v2
+    direction LR
     [*] --> draft
     draft --> ready: Definition of Ready aprovado
     ready --> in_progress: change criada
@@ -379,17 +402,35 @@ stateDiagram-v2
     in_progress --> draft: gap de negócio descoberto
     in_progress --> done: change arquivada
     done --> [*]
+
+    classDef aberto fill:#FDF4C9,stroke:#E3C534,stroke-width:3px,color:#2E2E2E
+    classDef andamento fill:#F5F8E9,stroke:#A9C46C,stroke-width:3px,color:#2E2E2E
+    classDef fechado fill:#FFFFFF,stroke:#5A5A5A,stroke-width:3px,color:#2E2E2E
+
+    class draft aberto
+    class ready,in_progress andamento
+    class done fechado
 ```
 
 ### Iniciativa
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"20px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E","primaryColor":"#EEF4F6","primaryBorderColor":"#7FB3C0","labelBackgroundColor":"#FFFFFF"},"state":{"useMaxWidth":false,"nodeSpacing":70,"rankSpacing":90}}}%%
 stateDiagram-v2
+    direction LR
     [*] --> draft
     draft --> active: primeira Estória pronta
-    active --> delivered: todas as Estórias em done
+    active --> delivered: todas as Estórias entregues
     delivered --> measured: métrica real comparada à meta
     measured --> [*]
+
+    classDef aberto fill:#FDF4C9,stroke:#E3C534,stroke-width:3px,color:#2E2E2E
+    classDef andamento fill:#F5F8E9,stroke:#A9C46C,stroke-width:3px,color:#2E2E2E
+    classDef fechado fill:#2E2E2E,stroke:#2E2E2E,stroke-width:3px,color:#FFFFFF
+
+    class draft aberto
+    class active,delivered andamento
+    class measured fechado
 ```
 
 O estado `measured` fecha o ciclo e evita o vício mais comum deste tipo de processo: definir métrica no começo e nunca mais olhar. **A Iniciativa não termina quando o código sobe — termina quando alguém comparou o gatilho prometido com o número real.**
@@ -401,12 +442,25 @@ O estado `measured` fecha o ciclo e evita o vício mais comum deste tipo de proc
 A cadeia é contínua e navegável nos dois sentidos.
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"18px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":40,"rankSpacing":80,"padding":26,"useMaxWidth":false}}}%%
 flowchart LR
-    L["linha de código"] --> C["commit<br/>Change-Id: PGI-1234"]
-    C --> CH["change PGI-1234"]
-    CH --> E["Estória PGI-1234"]
-    E --> IN["Iniciativa INI-042"]
-    IN --> ME["métrica que justificou<br/>aquilo existir"]
+    classDef up fill:#EEF4F6,stroke:#7FB3C0,stroke-width:3px,color:#2E2E2E
+    classDef down fill:#F5F8E9,stroke:#A9C46C,stroke-width:3px,color:#2E2E2E
+    classDef queue fill:#FDF4C9,stroke:#E3C534,stroke-width:3px,color:#2E2E2E
+
+    L("<span style='display:inline-block;width:260px;text-align:center;line-height:1.4'><span style='font-size:30px;font-weight:700'>Linha de código</span></span>")
+    C("<span style='display:inline-block;width:300px;text-align:center;line-height:1.4'><span style='font-size:30px;font-weight:700'>Commit</span><br/><span style='font-size:22px'>Change-Id: PGI-1234</span></span>")
+    CH("<span style='display:inline-block;width:280px;text-align:center;line-height:1.4'><span style='font-size:30px;font-weight:700'>Change</span><br/><span style='font-size:22px'>PGI-1234</span></span>")
+    E("<span style='display:inline-block;width:280px;text-align:center;line-height:1.4'><span style='font-size:30px;font-weight:700'>Estória</span><br/><span style='font-size:22px'>PGI-1234</span></span>")
+    IN("<span style='display:inline-block;width:280px;text-align:center;line-height:1.4'><span style='font-size:30px;font-weight:700'>Iniciativa</span><br/><span style='font-size:22px'>INI-042</span></span>")
+    ME("<span style='display:inline-block;width:340px;text-align:center;line-height:1.4'><span style='font-size:30px;font-weight:700'>Métrica</span><br/><span style='font-size:22px'>o que justificou aquilo existir</span></span>")
+
+    L --> C --> CH --> E --> IN --> ME
+
+    class L,C,CH down
+    class E,IN up
+    class ME queue
+    linkStyle default stroke:#5A5A5A,stroke-width:2px
 ```
 
 Na prática, isso responde à pergunta que quase nenhuma organização consegue responder: pega-se uma linha de código, o `git log` dá o `Change-Id`, o `Change-Id` dá a change, a change dá a Estória, a Estória dá o PRD e a métrica que justificou aquilo existir.

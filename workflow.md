@@ -377,6 +377,63 @@ Sem mocks na cadeia end-to-end. O valor do teste está justamente em atravessar 
 
 O teste de carga é o segundo elo que fecha ciclo: os números não são inventados pelo QA, vêm do que o Upstream declarou de volumetria e campanha.
 
+#### A passagem de bastão
+
+O que torna esta etapa diferente de um ciclo de testes convencional é **o que atravessa** da engenharia para o QA. Não é um documento novo, escrito por alguém que leu o que outra pessoa escreveu: é a **mesma especificação** que guiou a construção.
+
+Em um ciclo convencional, o QA recebe a funcionalidade pronta e reescreve o entendimento dela em casos de teste. Essa reescrita é onde a intenção se perde — e o que se perde só aparece em produção. Aqui, o critério de aceite foi escrito uma vez, no Upstream, e é o mesmo objeto que o código implementou e que o teste verifica.
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"18px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":45,"rankSpacing":120,"padding":28,"useMaxWidth":false,"subGraphTitleMargin":{"top":18,"bottom":40}}}}%%
+flowchart LR
+    classDef down fill:#F5F8E9,stroke:#A9C46C,stroke-width:3px,color:#2E2E2E
+    classDef queue fill:#FDF4C9,stroke:#E3C534,stroke-width:3px,color:#2E2E2E
+    classDef plain fill:#FFFFFF,stroke:#5A5A5A,stroke-width:3px,color:#2E2E2E
+    classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:3px,color:#FFFFFF
+
+    subgraph ENG["<span style='display:inline-block;width:520px;text-align:center;line-height:1.4'><span style='font-size:38px;font-weight:800;letter-spacing:3px'>ENGENHARIA&nbsp;</span><br/><span style='font-size:20px;color:#5A5A5A'>o que já existe quando o código fica pronto</span></span>"]
+        direction TB
+        SPEC("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>Especificação da Estória</span><br/><br/><span style='font-size:24px'>Critérios de aceite escritos uma vez, lá no início.</span></span>")
+        COD("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>Código entregue</span><br/><br/><span style='font-size:24px'>Já testado por dentro, em cada stack.</span></span>")
+    end
+
+    BAST("<span style='display:inline-block;width:440px;text-align:center;line-height:1.45'><span style='font-size:34px;font-weight:700'>Passagem de bastão</span><br/><br/><span style='font-size:24px'>A mesma especificação atravessa. O QA não reescreve o entendimento de ninguém.</span></span>")
+
+    subgraph QAB["<span style='display:inline-block;width:520px;text-align:center;line-height:1.4'><span style='font-size:38px;font-weight:800;letter-spacing:3px'>QA AUTÔNOMO&nbsp;</span><br/><span style='font-size:20px;color:#5A5A5A'>conduzido por agentes</span></span>"]
+        direction TB
+        GER("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>Agente gera os testes</span><br/><br/><span style='font-size:24px'>A partir da especificação, não de interpretação.</span></span>")
+        T1("<span style='display:inline-block;width:430px;text-align:left'><span style='font-size:26px;font-weight:700'>Funciona como foi pedido</span></span>")
+        T2("<span style='display:inline-block;width:430px;text-align:left'><span style='font-size:26px;font-weight:700'>Aguenta o volume previsto</span></span>")
+        T3("<span style='display:inline-block;width:430px;text-align:left'><span style='font-size:26px;font-weight:700'>Aguenta falha e degradação</span></span>")
+        EXEC("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>Agente executa e coleta</span><br/><br/><span style='font-size:24px'>Cadeia real, sem simulação. Métricas, registros e dados como evidência.</span></span>")
+        GER --> T1
+        GER --> T2
+        GER --> T3
+        T1 --> EXEC
+        T2 --> EXEC
+        T3 --> EXEC
+    end
+
+    REL("<span style='display:inline-block;width:440px;text-align:center;line-height:1.45'><span style='font-size:34px;font-weight:700'>Evidência publicada</span><br/><br/><span style='font-size:24px'>O que foi prometido, contra o que de fato aconteceu.</span></span>")
+
+    SPEC --> BAST
+    COD --> BAST
+    BAST --> GER
+    EXEC --> REL
+
+    class SPEC,COD down
+    class BAST queue
+    class GER,EXEC down
+    class T1,T2,T3 plain
+    class REL guard
+
+    style ENG fill:#FCFDF8,stroke:#D5E3B4,stroke-width:2px
+    style QAB fill:#FCFDF8,stroke:#D5E3B4,stroke-width:2px
+    linkStyle default stroke:#5A5A5A,stroke-width:2px
+```
+
+O bloco amarelo é o mesmo recurso visual da fila de Estórias no diagrama da seção 2, e por um motivo: **os dois são pontos de passagem, e nos dois o que atravessa é a especificação.** Uma vez do produto para a engenharia, outra vez da engenharia para o QA. É o mesmo objeto viajando por todo o fluxo.
+
 **Gate:** relatório consolidado aprovado, com todos os critérios de aceite verificados.
 
 ### Fechamento

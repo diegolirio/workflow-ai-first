@@ -31,42 +31,43 @@ O sistema é composto por **dois laços que giram em velocidades diferentes**, l
 **A fila é o único acoplamento entre os dois.** O Upstream escreve nela, o Downstream lê. Nenhum lado espera o outro terminar — e é isso que impede o modelo de virar cascata com nome novo.
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"17px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":60,"rankSpacing":90,"padding":22}}}%%
 flowchart LR
-    classDef up fill:#A9CDD6,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
-    classDef down fill:#CBDC8A,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
-    classDef queue fill:#F5E15C,stroke:#2E2E2E,stroke-width:3px,color:#2E2E2E
-    classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:2px,color:#FFFFFF
-    classDef done fill:#FFFFFF,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
+    classDef up fill:#EEF4F6,stroke:#7FB3C0,stroke-width:3px,color:#2E2E2E
+    classDef down fill:#F5F8E9,stroke:#A9C46C,stroke-width:3px,color:#2E2E2E
+    classDef queue fill:#FDF4C9,stroke:#E3C534,stroke-width:3px,color:#2E2E2E
+    classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:3px,color:#FFFFFF
+    classDef done fill:#FFFFFF,stroke:#5A5A5A,stroke-width:3px,color:#2E2E2E
 
-    subgraph UP["UPSTREAM · cadência de produto"]
+    subgraph UP["<span style='font-size:19px;font-weight:700;letter-spacing:1px'>UPSTREAM</span><br/><span style='font-size:14px;color:#5A5A5A'>cadência de produto</span>"]
         direction TB
-        EX["<b>0 · Exploratório</b><br/><small>conversas, dados e hipóteses<br/>viram matéria-prima para a IA</small><br/><small><i>Agente Product Owner · Claude Project/Cowork · GitHub</i></small>"]
-        RN["<b>1 · Refinamento de Negócio</b><br/><small>o que resolver, para quem,<br/>e qual número precisa mudar</small><br/><small><i>Agente Product Owner · Claude Project/Cowork · GitHub</i></small>"]
-        TL["<b>2 · Design de Telas</b><br/><small>como o cliente vê e usa,<br/>em cada plataforma</small><br/><small><i>Agente Product Owner · Claude Design · GitHub</i></small>"]
-        QE["<b>3 · Quebra em Estórias</b><br/><small>pedaços pequenos, cada um<br/>demonstrável sozinho</small><br/><small><i>Agente Product Owner · Claude Cowork · GitHub · Jira</i></small>"]
+        EX("<span style='font-size:23px;font-weight:700'>⓿&nbsp; Exploratório</span><br/><br/><span style='font-size:17px'>Conversas, dados e hipóteses<br/>viram matéria-prima para a IA.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Project / Cowork · GitHub</span>")
+        RN("<span style='font-size:23px;font-weight:700'>❶&nbsp; Refinamento de Negócio</span><br/><br/><span style='font-size:17px'>O que resolver, para quem,<br/>e qual número precisa mudar.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Project / Cowork · GitHub</span>")
+        TL("<span style='font-size:23px;font-weight:700'>❷&nbsp; Design de Telas</span><br/><br/><span style='font-size:17px'>Como o cliente vê e usa,<br/>em cada plataforma.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Design · GitHub</span>")
+        QE("<span style='font-size:23px;font-weight:700'>❸&nbsp; Quebra em Estórias</span><br/><br/><span style='font-size:17px'>Pedaços pequenos, cada um<br/>demonstrável sozinho.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Agente Product Owner · Claude Cowork · GitHub · Jira</span>")
         EX --> RN
-        RN -->|"PRD aprovado"| TL
-        TL -->|"design aprovado"| QE
+        RN -->|"<span style='font-size:14px'>PRD aprovado</span>"| TL
+        TL -->|"<span style='font-size:14px'>design aprovado</span>"| QE
     end
 
-    FILA[("<b>Estórias prontas</b><br/><small>pronto para construir</small>")]
+    FILA("<span style='font-size:21px;font-weight:700'>Estórias prontas</span><br/><br/><span style='font-size:16px'>Pronto para construir.</span>")
 
-    subgraph DOWN["DOWNSTREAM · cadência de engenharia · N em paralelo"]
+    subgraph DOWN["<span style='font-size:19px;font-weight:700;letter-spacing:1px'>DOWNSTREAM</span><br/><span style='font-size:14px;color:#5A5A5A'>cadência de engenharia · N em paralelo</span>"]
         direction TB
-        RT["<b>4 · Refinamento Técnico</b><br/><small>como construir, com o contrato<br/>entre as stacks fechado antes</small><br/><small><i>OpenSpec · Pag-Skills · Claude Code</i></small>"]
-        IMPL["<b>5 · Implementação</b><br/><small>código escrito com o teste antes,<br/>em cada stack e em paralelo</small><br/><small><i>Claude Code · Kotlin/Java · iOS/Android · React</i></small>"]
-        TEST["<b>6 · Spec-Driven Testing</b><br/><small>prova que faz o que foi pedido<br/>e que aguenta o volume previsto</small><br/><small><i>TestSpec · Simulador iOS/Android · Playwright · k6</i></small>"]
-        RT -->|"contrato aprovado"| IMPL
-        IMPL -->|"integração contínua verde"| TEST
+        RT("<span style='font-size:23px;font-weight:700'>❹&nbsp; Refinamento Técnico</span><br/><br/><span style='font-size:17px'>Como construir, com o contrato<br/>entre as stacks fechado antes.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>OpenSpec · Pag-Skills · Claude Code</span>")
+        IMPL("<span style='font-size:23px;font-weight:700'>❺&nbsp; Implementação</span><br/><br/><span style='font-size:17px'>Código escrito com o teste antes,<br/>em cada stack e em paralelo.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>Claude Code · Kotlin / Java · iOS / Android · React</span>")
+        TEST("<span style='font-size:23px;font-weight:700'>❻&nbsp; Spec-Driven Testing</span><br/><br/><span style='font-size:17px'>Prova que faz o que foi pedido<br/>e que aguenta o volume previsto.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>TestSpec · Simulador iOS / Android · Playwright · k6</span>")
+        RT -->|"<span style='font-size:14px'>contrato aprovado</span>"| IMPL
+        IMPL -->|"<span style='font-size:14px'>integração contínua verde</span>"| TEST
     end
 
-    GR["<b>GUARDRAILS</b><br/><small>o que impede a qualidade<br/>de depender de disciplina individual</small>"]
+    GR("<span style='font-size:20px;font-weight:700;letter-spacing:1px'>GUARDRAILS</span><br/><br/><span style='font-size:16px'>O que impede a qualidade<br/>de depender de disciplina individual.</span>")
 
-    FIM["<b>Fechamento</b><br/><small>spec atualizada, histórico guardado<br/>e a métrica cobrada depois</small><br/><small><i>GitHub · Jira · Confluence</i></small>"]
+    FIM("<span style='font-size:21px;font-weight:700'>Fechamento</span><br/><br/><span style='font-size:16px'>Spec atualizada, histórico guardado<br/>e a métrica cobrada depois.</span><br/><br/><span style='font-size:13px;color:#5A5A5A'>GitHub · Jira · Confluence</span>")
 
-    QE -->|"Definition of Ready"| FILA
+    QE -->|"<span style='font-size:14px'>Definition of Ready</span>"| FILA
     FILA --> RT
-    TEST -->|"relatório aprovado"| FIM
+    TEST -->|"<span style='font-size:14px'>relatório aprovado</span>"| FIM
     GR -.-> DOWN
 
     class EX,RN,TL,QE up
@@ -75,9 +76,9 @@ flowchart LR
     class GR guard
     class FIM done
 
-    style UP fill:#EDF5F7,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
-    style DOWN fill:#F4F8E4,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
-    linkStyle default stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
+    style UP fill:#FBFCFD,stroke:#C4D9E0,stroke-width:2px
+    style DOWN fill:#FCFDF8,stroke:#D5E3B4,stroke-width:2px
+    linkStyle default stroke:#5A5A5A,stroke-width:2px
 ```
 
 ---

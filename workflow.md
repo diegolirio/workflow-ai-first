@@ -32,6 +32,12 @@ O sistema é composto por **dois laços que giram em velocidades diferentes**, l
 
 ```mermaid
 flowchart LR
+    classDef up fill:#A9CDD6,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
+    classDef down fill:#CBDC8A,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
+    classDef queue fill:#F5E15C,stroke:#2E2E2E,stroke-width:3px,color:#2E2E2E
+    classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:2px,color:#FFFFFF
+    classDef done fill:#FFFFFF,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
+
     subgraph UP["UPSTREAM — cadência de produto"]
         direction TB
         EX["0 · Exploratório<br/>registro em initiatives/INI-042/explorations<br/>tudo vira conteúdo para a IA<br/>Tools: Agente Product Owner · Claude Project/Cowork · GitHub"]
@@ -62,6 +68,16 @@ flowchart LR
     FILA --> RT
     TEST -->|"gate: relatório aprovado"| FIM
     GR -.-> DOWN
+
+    class EX,RN,TL,QE up
+    class RT,IMPL,TEST down
+    class FILA queue
+    class GR guard
+    class FIM done
+
+    style UP fill:#EDF5F7,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
+    style DOWN fill:#F4F8E4,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
+    linkStyle default stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
 ```
 
 ---

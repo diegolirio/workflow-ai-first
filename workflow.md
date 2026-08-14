@@ -31,30 +31,32 @@ O sistema é composto por **dois laços que giram em velocidades diferentes**, l
 **A fila é o único acoplamento entre os dois.** O Upstream escreve nela, o Downstream lê. Nenhum lado espera o outro terminar — e é isso que impede o modelo de virar cascata com nome novo.
 
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph UP["UPSTREAM — cadência de produto"]
         direction TB
         RN["1 · Refinamento de Negócio<br/>PRD · persona · métricas · volumetria"]
         TL["2 · Design de Telas<br/>telas por superfície · estados obrigatórios"]
         QE["3 · Quebra em Estórias<br/>fatia vertical demonstrável"]
-        RN -->|"gate: Product Owner aprova<br/>sem gap bloqueante em aberto"| TL
-        TL -->|"gate: Produto e Design aprovam"| QE
+        RN -->|"gate: PRD aprovado<br/>sem gap bloqueante em aberto"| TL
+        TL -->|"gate: design aprovado"| QE
     end
 
-    FILA[("fila de Estórias prontas")]
-    QE -->|"gate: Definition of Ready<br/>validado por skill + Product Owner"| FILA
+    FILA[("fila de<br/>Estórias prontas")]
 
     subgraph DOWN["DOWNSTREAM — cadência de engenharia · N em paralelo"]
         direction TB
         RT["4 · Refinamento Técnico<br/>change OpenSpec · contrato congelado"]
         IMPL["5 · Implementação<br/>código + testes unitários + container"]
         TEST["6 · Spec-Driven Testing<br/>aceite · end-to-end · carga"]
-        RT -->|"gate: Tech Lead aprova"| IMPL
+        RT -->|"gate: refinamento técnico aprovado"| IMPL
         IMPL -->|"gate: integração contínua verde<br/>em todos os repos"| TEST
     end
 
+    FIM["sync de specs · arquivamento<br/>publicação em Jira e Confluence"]
+
+    QE -->|"gate: Definition of Ready<br/>validado por skill e aprovado"| FILA
     FILA --> RT
-    TEST -->|"gate: relatório aprovado"| FIM["sync de specs · arquivamento<br/>publicação em Jira e Confluence"]
+    TEST -->|"gate: relatório aprovado"| FIM
 ```
 
 ---

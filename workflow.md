@@ -415,43 +415,30 @@ Em setor regulado, com auditoria, isso se paga sozinho.
 
 ---
 
-## 10. Papéis e gates
+## 10. Papéis, gates e ferramentas
 
-| Etapa | Conduz | Aprova |
-|---|---|---|
-| 1 · Refinamento de Negócio | Product Owner | Product Owner |
-| 2 · Design de Telas | Produto e Design | Produto e Design |
-| 3 · Quebra em Estórias | Product Owner, Tech Lead consultado | Skill valida prontidão, Product Owner aprova |
-| 4 · Refinamento Técnico | Tech Lead | Tech Lead |
-| 5 · Implementação | Desenvolvedor | Integração contínua verde e revisão de código |
-| 6 · Spec-Driven Testing | QA | QA e Product Owner |
+| Etapa | Conduz | Aprova | Ferramenta |
+|---|---|---|---|
+| 0 · Exploratório | Product Owner | Product Owner | Agente Product Owner, Claude Projects e Cowork, GitHub |
+| 1 · Refinamento de Negócio | Product Owner | Product Owner | Agente Product Owner, Claude Projects e Cowork, GitHub |
+| 2 · Design de Telas | Product Owner | Design | Agente Product Owner, Claude Design, GitHub |
+| 3 · Quebra em Estórias | Product Owner | Skill valida prontidão, Product Owner aprova | Agente Product Owner, Claude Cowork, GitHub, Jira |
+| 4 · Refinamento Técnico | Desenvolvedor | Conformidade da especificação | OpenSpec, skills próprias, Claude Code |
+| 5 · Implementação | Desenvolvedor | QA, com integração contínua verde | Claude Code com Kotlin, Java, iOS, Android e React |
+| 6 · Spec-Driven Testing | QA | Conformidade da especificação e Product Owner | TestSpec, Claude Code, Simulador iOS e Android, Playwright, teste de carga |
+| 7 · Fechamento | Desenvolvedor | Product Owner e Tech Lead | GitHub, Jira, Confluence |
 
-Todos os gates são aprovação de Pull Request, exceto o de integração contínua.
+Os gates são aprovação de Pull Request, com duas exceções: a integração contínua, que é automática, e a conformidade da especificação, verificada por skill antes de qualquer pessoa olhar.
+
+**O Product Owner conduz todo o Upstream.** O que muda entre as etapas 0 e 3 não é quem trabalha nem com qual ferramenta — é o artefato produzido e quem aprova a saída.
+
+**O Downstream roda sempre com agentes e skills.** Etapa executada à mão é etapa que não é repetível e não é auditável.
 
 Cada envolvido tem um ponto no fluxo onde a decisão é dele e não passa sem ele. É isso que dá corpo ao princípio da seção 1.
 
 ---
 
-## 11. Ferramentas por etapa
-
-| Etapa | Ferramenta |
-|---|---|
-| 0 · Exploratório | Agente Product Owner, Claude Projects e Cowork, GitHub |
-| 1 · Refinamento de Negócio | Agente Product Owner, Claude Projects e Cowork, GitHub |
-| 2 · Design de Telas | Agente Product Owner, Claude Design, GitHub |
-| 3 · Quebra em Estórias | Agente Product Owner, Claude Cowork, GitHub, Jira |
-| 4 · Refinamento Técnico | OpenSpec, skills próprias, Claude Code |
-| 5 · Implementação | Claude Code com Kotlin, Java, iOS, Android e React |
-| 6 · Spec-Driven Testing | TestSpec, Claude Code, Simulador iOS e Android, Playwright, teste de carga |
-| Fechamento | GitHub, Jira, Confluence |
-
-O Upstream inteiro roda com o mesmo conjunto — agente de produto, superfícies de ideação e GitHub como destino. O que muda entre as etapas não é a ferramenta, é o artefato produzido.
-
-**O Downstream roda sempre com agentes e skills.** Etapa executada à mão é etapa que não é repetível e não é auditável.
-
----
-
-## 12. Publicação — uma via só
+## 11. Publicação — uma via só
 
 O git é a fonte da verdade. Jira e Confluence recebem espelhos gerados, nunca lidos pelo fluxo para trabalhar.
 
@@ -466,7 +453,7 @@ Toda página gerada carrega no topo um aviso de página gerada e o link para o c
 
 ---
 
-## 13. Quando dá errado
+## 12. Quando dá errado
 
 A parte que decide se o processo sobrevive ao contato com a realidade.
 
@@ -480,7 +467,7 @@ A parte que decide se o processo sobrevive ao contato com a realidade.
 
 ---
 
-## 14. O que precisa ser construído
+## 13. O que precisa ser construído
 
 | Item | Estado |
 |---|---|
@@ -497,7 +484,7 @@ O Downstream tem base pronta em modelos de especificação já existentes. O que
 
 ---
 
-## 15. Glossário
+## 14. Glossário
 
 | Termo | Significado |
 |---|---|

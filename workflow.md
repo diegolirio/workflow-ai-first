@@ -40,29 +40,29 @@ flowchart LR
 
     subgraph UP["UPSTREAM · cadência de produto"]
         direction TB
-        EX["<b>0 · Exploratório</b><br/><small>registro de iniciativas e explorações<br/>tudo vira conteúdo para a IA</small><br/><small><i>Agente Product Owner · Claude Project/Cowork · GitHub</i></small>"]
-        RN["<b>1 · Refinamento de Negócio</b><br/><small>PRD, persona, métricas e volumetria</small><br/><small><i>Agente Product Owner · Claude Project/Cowork · GitHub</i></small>"]
-        TL["<b>2 · Design de Telas</b><br/><small>telas por superfície, com estados obrigatórios</small><br/><small><i>Agente Product Owner · Claude Design · GitHub</i></small>"]
-        QE["<b>3 · Quebra em Estórias</b><br/><small>fatia vertical demonstrável sozinha</small><br/><small><i>Agente Product Owner · Claude Cowork · GitHub · Jira</i></small>"]
+        EX["<b>0 · Exploratório</b><br/><small>conversas, dados e hipóteses<br/>viram matéria-prima para a IA</small><br/><small><i>Agente Product Owner · Claude Project/Cowork · GitHub</i></small>"]
+        RN["<b>1 · Refinamento de Negócio</b><br/><small>o que resolver, para quem,<br/>e qual número precisa mudar</small><br/><small><i>Agente Product Owner · Claude Project/Cowork · GitHub</i></small>"]
+        TL["<b>2 · Design de Telas</b><br/><small>como o cliente vê e usa,<br/>em cada plataforma</small><br/><small><i>Agente Product Owner · Claude Design · GitHub</i></small>"]
+        QE["<b>3 · Quebra em Estórias</b><br/><small>pedaços pequenos, cada um<br/>demonstrável sozinho</small><br/><small><i>Agente Product Owner · Claude Cowork · GitHub · Jira</i></small>"]
         EX --> RN
         RN -->|"PRD aprovado"| TL
         TL -->|"design aprovado"| QE
     end
 
-    FILA[("<b>fila de<br/>Estórias prontas</b>")]
+    FILA[("<b>Estórias prontas</b><br/><small>pronto para construir</small>")]
 
     subgraph DOWN["DOWNSTREAM · cadência de engenharia · N em paralelo"]
         direction TB
-        RT["<b>4 · Refinamento Técnico</b><br/><small>change com contrato congelado e fases por stack</small><br/><small><i>OpenSpec · Pag-Skills · Claude Code</i></small>"]
-        IMPL["<b>5 · Implementação</b><br/><small>código com testes unitários e de container</small><br/><small><i>Claude Code · Kotlin/Java · iOS/Android · React</i></small>"]
-        TEST["<b>6 · Spec-Driven Testing</b><br/><small>critério de aceite, end-to-end e carga</small><br/><small><i>TestSpec · Simulador iOS/Android · Playwright · k6</i></small>"]
+        RT["<b>4 · Refinamento Técnico</b><br/><small>como construir, com o contrato<br/>entre as stacks fechado antes</small><br/><small><i>OpenSpec · Pag-Skills · Claude Code</i></small>"]
+        IMPL["<b>5 · Implementação</b><br/><small>código escrito com o teste antes,<br/>em cada stack e em paralelo</small><br/><small><i>Claude Code · Kotlin/Java · iOS/Android · React</i></small>"]
+        TEST["<b>6 · Spec-Driven Testing</b><br/><small>prova que faz o que foi pedido<br/>e que aguenta o volume previsto</small><br/><small><i>TestSpec · Simulador iOS/Android · Playwright · k6</i></small>"]
         RT -->|"contrato aprovado"| IMPL
         IMPL -->|"integração contínua verde"| TEST
     end
 
-    GR["<b>GUARDRAILS</b><br/><small>constituição · TDD · gate multi-repositório<br/>registro de dívida técnica</small>"]
+    GR["<b>GUARDRAILS</b><br/><small>o que impede a qualidade<br/>de depender de disciplina individual</small>"]
 
-    FIM["<b>Fechamento</b><br/><small>sync, arquivamento e publicação</small><br/><small><i>GitHub · Jira · Confluence</i></small>"]
+    FIM["<b>Fechamento</b><br/><small>spec atualizada, histórico guardado<br/>e a métrica cobrada depois</small><br/><small><i>GitHub · Jira · Confluence</i></small>"]
 
     QE -->|"Definition of Ready"| FILA
     FILA --> RT

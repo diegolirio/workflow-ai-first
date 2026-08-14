@@ -38,35 +38,35 @@ flowchart LR
     classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:2px,color:#FFFFFF
     classDef done fill:#FFFFFF,stroke:#2E2E2E,stroke-width:2px,color:#2E2E2E
 
-    subgraph UP["UPSTREAM — cadência de produto"]
+    subgraph UP["UPSTREAM · cadência de produto"]
         direction TB
-        EX["0 · Exploratório<br/>registro em initiatives/INI-042/explorations<br/>tudo vira conteúdo para a IA<br/>Tools: Agente Product Owner · Claude Project/Cowork · GitHub"]
-        RN["1 · Refinamento de Negócio<br/>PRD · persona · métricas · volumetria<br/>Tools: Agente Product Owner · Claude Project/Cowork · GitHub"]
-        TL["2 · Design de Telas<br/>telas por superfície · estados obrigatórios<br/>Tools: Agente Product Owner · Claude Design · GitHub"]
-        QE["3 · Quebra em Estórias<br/>fatia vertical demonstrável<br/>Tools: Agente Product Owner · Claude Cowork · GitHub · Jira"]
-        EX -->|"insumo · sem gate"| RN
-        RN -->|"gate: PRD aprovado<br/>sem gap bloqueante em aberto"| TL
-        TL -->|"gate: design aprovado"| QE
+        EX["<b>0 · Exploratório</b><br/><small>registro de iniciativas e explorações<br/>tudo vira conteúdo para a IA</small><br/><small><i>Agente Product Owner · Claude Project/Cowork · GitHub</i></small>"]
+        RN["<b>1 · Refinamento de Negócio</b><br/><small>PRD, persona, métricas e volumetria</small><br/><small><i>Agente Product Owner · Claude Project/Cowork · GitHub</i></small>"]
+        TL["<b>2 · Design de Telas</b><br/><small>telas por superfície, com estados obrigatórios</small><br/><small><i>Agente Product Owner · Claude Design · GitHub</i></small>"]
+        QE["<b>3 · Quebra em Estórias</b><br/><small>fatia vertical demonstrável sozinha</small><br/><small><i>Agente Product Owner · Claude Cowork · GitHub · Jira</i></small>"]
+        EX --> RN
+        RN -->|"PRD aprovado"| TL
+        TL -->|"design aprovado"| QE
     end
 
-    FILA[("fila de<br/>Estórias prontas")]
+    FILA[("<b>fila de<br/>Estórias prontas</b>")]
 
-    subgraph DOWN["DOWNSTREAM — cadência de engenharia · N em paralelo"]
+    subgraph DOWN["DOWNSTREAM · cadência de engenharia · N em paralelo"]
         direction TB
-        RT["4 · Refinamento Técnico<br/>change OpenSpec · contrato congelado · fases por stack<br/>tests.md e tarefas de instrumentação<br/>Tools: OpenSpec · Pag-Skills · Claude Code"]
-        IMPL["5 · Implementação<br/>código + testes unitários + container · TDD<br/>workspace central · branch e Change-Id por repositório<br/>Tools: Claude Code · Kotlin/Java · iOS/Android · React"]
-        TEST["6 · Spec-Driven Testing<br/>aceite 1:1 · App → BFF → Backend · Portal → BFF → Backend · carga<br/>Tools: TestSpec · Claude Code · Simulador iOS/Android · Playwright · k6"]
-        RT -->|"gate: refinamento técnico aprovado"| IMPL
-        IMPL -->|"gate: integração contínua verde<br/>em todos os repos"| TEST
+        RT["<b>4 · Refinamento Técnico</b><br/><small>change com contrato congelado e fases por stack</small><br/><small><i>OpenSpec · Pag-Skills · Claude Code</i></small>"]
+        IMPL["<b>5 · Implementação</b><br/><small>código com testes unitários e de container</small><br/><small><i>Claude Code · Kotlin/Java · iOS/Android · React</i></small>"]
+        TEST["<b>6 · Spec-Driven Testing</b><br/><small>critério de aceite, end-to-end e carga</small><br/><small><i>TestSpec · Simulador iOS/Android · Playwright · k6</i></small>"]
+        RT -->|"contrato aprovado"| IMPL
+        IMPL -->|"integração contínua verde"| TEST
     end
 
-    GR["GUARDRAILS<br/>constituição do projeto · TDD obrigatório<br/>gate agregador multi-repositório<br/>registro de dívida técnica"]
+    GR["<b>GUARDRAILS</b><br/><small>constituição · TDD · gate multi-repositório<br/>registro de dívida técnica</small>"]
 
-    FIM["sync de specs · arquivamento<br/>Estória em done · Iniciativa rumo a measured<br/>Tools: GitHub · Jira · Confluence"]
+    FIM["<b>Fechamento</b><br/><small>sync, arquivamento e publicação</small><br/><small><i>GitHub · Jira · Confluence</i></small>"]
 
-    QE -->|"gate: Definition of Ready<br/>validado por skill e aprovado"| FILA
+    QE -->|"Definition of Ready"| FILA
     FILA --> RT
-    TEST -->|"gate: relatório aprovado"| FIM
+    TEST -->|"relatório aprovado"| FIM
     GR -.-> DOWN
 
     class EX,RN,TL,QE up

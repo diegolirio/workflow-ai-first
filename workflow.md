@@ -34,9 +34,11 @@ O sistema é composto por **dois laços que giram em velocidades diferentes**, l
 flowchart LR
     subgraph UP["UPSTREAM — cadência de produto"]
         direction TB
-        RN["1 · Refinamento de Negócio<br/>PRD · persona · métricas · volumetria"]
-        TL["2 · Design de Telas<br/>telas por superfície · estados obrigatórios"]
-        QE["3 · Quebra em Estórias<br/>fatia vertical demonstrável"]
+        EX["0 · Exploratório<br/>registro em initiatives/INI-042/explorations<br/>tudo vira conteúdo para a IA<br/>Tools: Agente Product Owner · Claude Project/Cowork · GitHub"]
+        RN["1 · Refinamento de Negócio<br/>PRD · persona · métricas · volumetria<br/>Tools: Agente Product Owner · Claude Project/Cowork · GitHub"]
+        TL["2 · Design de Telas<br/>telas por superfície · estados obrigatórios<br/>Tools: Agente Product Owner · Claude Design · GitHub"]
+        QE["3 · Quebra em Estórias<br/>fatia vertical demonstrável<br/>Tools: Agente Product Owner · Claude Cowork · GitHub · Jira"]
+        EX -->|"insumo · sem gate"| RN
         RN -->|"gate: PRD aprovado<br/>sem gap bloqueante em aberto"| TL
         TL -->|"gate: design aprovado"| QE
     end
@@ -45,18 +47,21 @@ flowchart LR
 
     subgraph DOWN["DOWNSTREAM — cadência de engenharia · N em paralelo"]
         direction TB
-        RT["4 · Refinamento Técnico<br/>change OpenSpec · contrato congelado"]
-        IMPL["5 · Implementação<br/>código + testes unitários + container"]
-        TEST["6 · Spec-Driven Testing<br/>aceite · end-to-end · carga"]
+        RT["4 · Refinamento Técnico<br/>change OpenSpec · contrato congelado · fases por stack<br/>tests.md e tarefas de instrumentação<br/>Tools: OpenSpec · Pag-Skills · Claude Code"]
+        IMPL["5 · Implementação<br/>código + testes unitários + container · TDD<br/>workspace central · branch e Change-Id por repositório<br/>Tools: Claude Code · Kotlin/Java · iOS/Android · React"]
+        TEST["6 · Spec-Driven Testing<br/>aceite 1:1 · App → BFF → Backend · Portal → BFF → Backend · carga<br/>Tools: TestSpec · Claude Code · Simulador iOS/Android · Playwright · k6"]
         RT -->|"gate: refinamento técnico aprovado"| IMPL
         IMPL -->|"gate: integração contínua verde<br/>em todos os repos"| TEST
     end
 
-    FIM["sync de specs · arquivamento<br/>publicação em Jira e Confluence"]
+    GR["GUARDRAILS<br/>constituição do projeto · TDD obrigatório<br/>gate agregador multi-repositório<br/>registro de dívida técnica"]
+
+    FIM["sync de specs · arquivamento<br/>Estória em done · Iniciativa rumo a measured<br/>Tools: GitHub · Jira · Confluence"]
 
     QE -->|"gate: Definition of Ready<br/>validado por skill e aprovado"| FILA
     FILA --> RT
     TEST -->|"gate: relatório aprovado"| FIM
+    GR -.-> DOWN
 ```
 
 ---
@@ -120,10 +125,25 @@ Todas as etapas seguem o mesmo formato de contrato: **quem conduz, ferramenta, e
 
 Toda etapa do Upstream mantém um registro de **ambiguidades e gaps** — resolvidos e em aberto. Essa é a função do Upstream: reduzir ambiguidade antes que ela custe caro. Gap em aberto marcado como bloqueante impede a promoção para a etapa seguinte.
 
+### Etapa 0 — Exploratório
+
+**Conduz:** Product Owner
+**Ferramenta:** Agente Product Owner, Claude Projects e Claude Cowork, commitando em GitHub
+**Entrada:** qualquer coisa — conversa com cliente, dado de operação, reclamação recorrente, benchmark, hipótese solta
+**Saída:** `initiatives/INI-042/explorations/`
+
+Esta etapa não produz decisão. Produz **matéria-prima**: transcrições, anotações, prints, números levantados, referências de mercado, perguntas em aberto. Tudo é registrado como arquivo.
+
+A razão é direta: **tudo isso vira contexto para a Inteligência Artificial.** Uma exploração que ficou numa reunião não alimenta nada. A mesma exploração registrada em arquivo alimenta o refinamento de negócio, o design das telas e, mais adiante, a discussão técnica — sem que ninguém precise lembrar do que foi dito.
+
+**Não há gate.** O material exploratório não é aprovado, é acumulado. É a única etapa do fluxo sem porta, e isso é deliberado: exigir aprovação para explorar mata a exploração.
+
+O que existe é uma passagem: quando alguém decide que ali tem uma aposta, a exploração vira insumo da Etapa 1 e o `gaps.md` nasce já povoado pelas perguntas em aberto que a exploração levantou.
+
 ### Etapa 1 — Refinamento de Negócio
 
 **Conduz:** Product Owner
-**Ferramenta:** Claude Projects para ideação, Claude Cowork para materializar
+**Ferramenta:** Agente Product Owner, Claude Projects para ideação, Claude Cowork para materializar
 **Entrada:** uma aposta de negócio, em qualquer nível de maturidade
 **Saída:** `initiatives/INI-042/`
 
@@ -399,13 +419,16 @@ Cada envolvido tem um ponto no fluxo onde a decisão é dele e não passa sem el
 
 | Etapa | Ferramenta |
 |---|---|
-| Iniciativa e ideação | Claude Projects |
-| Protótipo e telas | Claude Design |
-| Refinamento de negócio, PRD e Estórias | Claude Cowork, commitando em `{product}-specs` |
-| Refinamento técnico, especificações e implementação | Claude Code com agentes e skills |
-| Validação de critério de aceite e testes end-to-end | Claude Code com agentes e skills |
-| End-to-end aplicativo | Claude Code com Simulador iOS e Android |
-| End-to-end portal | Claude Code com Playwright |
+| 0 · Exploratório | Agente Product Owner, Claude Projects e Cowork, GitHub |
+| 1 · Refinamento de Negócio | Agente Product Owner, Claude Projects e Cowork, GitHub |
+| 2 · Design de Telas | Agente Product Owner, Claude Design, GitHub |
+| 3 · Quebra em Estórias | Agente Product Owner, Claude Cowork, GitHub, Jira |
+| 4 · Refinamento Técnico | OpenSpec, skills próprias, Claude Code |
+| 5 · Implementação | Claude Code com Kotlin, Java, iOS, Android e React |
+| 6 · Spec-Driven Testing | TestSpec, Claude Code, Simulador iOS e Android, Playwright, teste de carga |
+| Fechamento | GitHub, Jira, Confluence |
+
+O Upstream inteiro roda com o mesmo conjunto — agente de produto, superfícies de ideação e GitHub como destino. O que muda entre as etapas não é a ferramenta, é o artefato produzido.
 
 **O Downstream roda sempre com agentes e skills.** Etapa executada à mão é etapa que não é repetível e não é auditável.
 

@@ -402,16 +402,8 @@ flowchart LR
     subgraph QAB["<span style='display:inline-block;width:520px;text-align:center;line-height:1.4'><span style='font-size:38px;font-weight:800;letter-spacing:3px'>QA AUTÔNOMO&nbsp;</span><br/><span style='font-size:20px;color:#5A5A5A'>conduzido por agentes</span></span>"]
         direction TB
         GER("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>Agente gera os testes</span><br/><br/><span style='font-size:24px'>A partir da especificação, não de interpretação.</span></span>")
-        T1("<span style='display:inline-block;width:430px;text-align:left'><span style='font-size:26px;font-weight:700'>Funciona como foi pedido</span></span>")
-        T2("<span style='display:inline-block;width:430px;text-align:left'><span style='font-size:26px;font-weight:700'>Aguenta o volume previsto</span></span>")
-        T3("<span style='display:inline-block;width:430px;text-align:left'><span style='font-size:26px;font-weight:700'>Aguenta falha e degradação</span></span>")
         EXEC("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>Agente executa e coleta</span><br/><br/><span style='font-size:24px'>Cadeia real, sem simulação. Métricas, registros e dados como evidência.</span></span>")
-        GER --> T1
-        GER --> T2
-        GER --> T3
-        T1 --> EXEC
-        T2 --> EXEC
-        T3 --> EXEC
+        GER --> EXEC
     end
 
     REL("<span style='display:inline-block;width:440px;text-align:center;line-height:1.45'><span style='font-size:34px;font-weight:700'>Evidência publicada</span><br/><br/><span style='font-size:24px'>O que foi prometido, contra o que de fato aconteceu.</span></span>")
@@ -424,13 +416,46 @@ flowchart LR
     class SPEC,COD down
     class BAST queue
     class GER,EXEC down
-    class T1,T2,T3 plain
     class REL guard
 
     style ENG fill:#FCFDF8,stroke:#D5E3B4,stroke-width:2px
     style QAB fill:#FCFDF8,stroke:#D5E3B4,stroke-width:2px
     linkStyle default stroke:#5A5A5A,stroke-width:2px
 ```
+
+#### Quem cobre o quê
+
+A pirâmide separa o que é **parte da implementação** do que é **verificação autônoma depois dela**. É a mesma divisão da passagem de bastão, vista por outro ângulo: a base pertence a quem escreve o código, o topo pertence aos agentes de QA.
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"18px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":10,"rankSpacing":10,"padding":14,"useMaxWidth":false,"subGraphTitleMargin":{"top":20,"bottom":110}}}}%%
+flowchart TB
+    classDef sdd fill:#F5F8E9,stroke:#A9C46C,stroke-width:3px,color:#2E2E2E
+    classDef sdt fill:#FDF4C9,stroke:#E3C534,stroke-width:3px,color:#2E2E2E
+    classDef humano fill:#FFFFFF,stroke:#5A5A5A,stroke-width:3px,color:#2E2E2E
+
+    subgraph PIR["<span style='display:inline-block;width:1000px;text-align:center;line-height:1.4'><span style='font-size:40px;font-weight:800;letter-spacing:3px'>PIRÂMIDE DE TESTES&nbsp;</span><br/><span style='font-size:21px;color:#5A5A5A'>quanto mais alto, menos casos e mais caro cada um</span></span>"]
+        direction TB
+        P7("<span style='display:inline-block;width:200px;text-align:center;line-height:1.3'><span style='font-size:20px;font-weight:700'>Exploratório<br/>manual</span><br/><span style='font-size:16px;color:#5A5A5A'>humano</span></span>")
+        P6("<span style='display:inline-block;width:320px;text-align:center'><span style='font-size:23px;font-weight:700'>Resiliência e caos</span><br/><span style='font-size:17px;color:#5A5A5A'>QA autônomo</span></span>")
+        P5("<span style='display:inline-block;width:450px;text-align:center'><span style='font-size:25px;font-weight:700'>Carga</span><br/><span style='font-size:18px;color:#5A5A5A'>QA autônomo</span></span>")
+        P4("<span style='display:inline-block;width:580px;text-align:center'><span style='font-size:27px;font-weight:700'>Ponta a ponta pela tela</span><br/><span style='font-size:19px;color:#5A5A5A'>QA autônomo</span></span>")
+        P3("<span style='display:inline-block;width:710px;text-align:center'><span style='font-size:29px;font-weight:700'>Ponta a ponta pela interface de programação</span><br/><span style='font-size:20px;color:#5A5A5A'>QA autônomo</span></span>")
+        P2("<span style='display:inline-block;width:850px;text-align:center'><span style='font-size:31px;font-weight:700'>Integração e container</span><br/><span style='font-size:21px;color:#5A5A5A'>parte da implementação</span></span>")
+        P1("<span style='display:inline-block;width:990px;text-align:center'><span style='font-size:34px;font-weight:700'>Unitários</span><br/><span style='font-size:22px;color:#5A5A5A'>parte da implementação</span></span>")
+        P7 ~~~ P6 ~~~ P5 ~~~ P4 ~~~ P3 ~~~ P2 ~~~ P1
+    end
+
+    class P1,P2 sdd
+    class P3,P4,P5,P6 sdt
+    class P7 humano
+
+    style PIR fill:#FDFDFC,stroke:#DDDDD5,stroke-width:2px
+```
+
+**Verde é parte da implementação.** Escrito antes do código, pelo mesmo agente que constrói, e nunca tratado como etapa separada. **Amarelo é QA autônomo.** Gerado e executado por agentes a partir da especificação, depois do código pronto — é o que atravessa a passagem de bastão. É a mesma divisão do diagrama anterior, vista por outro ângulo.
+
+Duas leituras que a pirâmide entrega de uma vez. A **base é larga e barata**: muitos casos, rodando a cada commit. O **topo é estreito e caro**: poucos cenários, rodando ao fim da Estória. E o único degrau ainda humano é o exploratório no topo — tudo abaixo dele é automático.
 
 O bloco amarelo é o mesmo recurso visual da fila de Estórias no diagrama da seção 2, e por um motivo: **os dois são pontos de passagem, e nos dois o que atravessa é a especificação.** Uma vez do produto para a engenharia, outra vez da engenharia para o QA. É o mesmo objeto viajando por todo o fluxo.
 

@@ -39,35 +39,35 @@ flowchart LR
     classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:3px,color:#FFFFFF
     classDef done fill:#FFFFFF,stroke:#5A5A5A,stroke-width:3px,color:#2E2E2E
 
-    subgraph UP["<span style='font-size:36px;font-weight:800;letter-spacing:3px'>UPSTREAM</span><br/><span style='font-size:17px;color:#5A5A5A'>cadência de produto</span>"]
+    subgraph UP["<span style='display:inline-block;width:560px;text-align:center;line-height:1.4'><span style='font-size:42px;font-weight:800;letter-spacing:3px'>UPSTREAM&nbsp;</span><br/><span style='font-size:20px;color:#5A5A5A'>cadência de produto</span></span>"]
         direction TB
-        EX("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>⓿&nbsp;&nbsp;Exploratório</span><br/><br/><span style='font-size:23px'>Conversas, dados e hipóteses viram matéria-prima para a IA.</span></span>")
-        RN("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❶&nbsp;&nbsp;Refinamento de Negócio</span><br/><br/><span style='font-size:23px'>O que resolver, para quem, e qual número precisa mudar.</span></span>")
-        TL("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❷&nbsp;&nbsp;Design de Telas</span><br/><br/><span style='font-size:23px'>Como o cliente vê e usa, em cada plataforma.</span></span>")
-        QE("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❸&nbsp;&nbsp;Quebra em Estórias</span><br/><br/><span style='font-size:23px'>Pedaços pequenos, cada um demonstrável sozinho.</span></span>")
+        EX("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>⓿&nbsp;&nbsp;Exploratório</span><br/><br/><span style='font-size:27px'>Conversas, dados e hipóteses viram matéria-prima para a IA.</span></span>")
+        RN("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❶&nbsp;&nbsp;Refinamento de Negócio</span><br/><br/><span style='font-size:27px'>O que resolver, para quem, e qual número precisa mudar.</span></span>")
+        TL("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❷&nbsp;&nbsp;Design de Telas</span><br/><br/><span style='font-size:27px'>Como o cliente vê e usa, em cada plataforma.</span></span>")
+        QE("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❸&nbsp;&nbsp;Quebra em Estórias</span><br/><br/><span style='font-size:27px'>Pedaços pequenos, cada um demonstrável sozinho.</span></span>")
         EX --> RN
-        RN -->|"<span style='font-size:14px'>PRD aprovado</span>"| TL
-        TL -->|"<span style='font-size:14px'>design aprovado</span>"| QE
+        RN -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>PRD aprovado&nbsp;</span>"| TL
+        TL -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>design aprovado&nbsp;</span>"| QE
     end
 
-    FILA("<span style='display:inline-block;width:340px;text-align:center;line-height:1.45'><span style='font-size:30px;font-weight:700'>Estórias prontas</span><br/><br/><span style='font-size:22px'>Pronto para construir.</span></span>")
+    FILA("<span style='display:inline-block;width:400px;text-align:center;line-height:1.45'><span style='font-size:36px;font-weight:700'>Estórias prontas</span><br/><br/><span style='font-size:26px'>Pronto para construir.</span></span>")
 
-    subgraph DOWN["<span style='font-size:36px;font-weight:800;letter-spacing:3px'>DOWNSTREAM</span><br/><span style='font-size:17px;color:#5A5A5A'>cadência de engenharia · N em paralelo</span>"]
+    subgraph DOWN["<span style='display:inline-block;width:560px;text-align:center;line-height:1.4'><span style='font-size:42px;font-weight:800;letter-spacing:3px'>DOWNSTREAM&nbsp;</span><br/><span style='font-size:20px;color:#5A5A5A'>cadência de engenharia · N em paralelo</span></span>"]
         direction TB
-        RT("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❹&nbsp;&nbsp;Refinamento Técnico</span><br/><br/><span style='font-size:23px'>Como construir, com o contrato entre as stacks fechado antes.</span></span>")
-        IMPL("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❺&nbsp;&nbsp;Implementação</span><br/><br/><span style='font-size:23px'>Código escrito com o teste antes, em cada stack e em paralelo.</span></span>")
-        TEST("<span style='display:inline-block;width:470px;text-align:left;line-height:1.45'><span style='font-size:32px;font-weight:700'>❻&nbsp;&nbsp;Spec-Driven Testing</span><br/><br/><span style='font-size:23px'>Prova que faz o que foi pedido e que aguenta o volume previsto.</span></span>")
-        RT -->|"<span style='font-size:14px'>contrato aprovado</span>"| IMPL
-        IMPL -->|"<span style='font-size:14px'>integração contínua verde</span>"| TEST
+        RT("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❹&nbsp;&nbsp;Refinamento Técnico</span><br/><br/><span style='font-size:27px'>Como construir, com o contrato entre as stacks fechado antes.</span></span>")
+        IMPL("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❺&nbsp;&nbsp;Implementação</span><br/><br/><span style='font-size:27px'>Código escrito com o teste antes, em cada stack e em paralelo.</span></span>")
+        TEST("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❻&nbsp;&nbsp;Spec-Driven Testing</span><br/><br/><span style='font-size:27px'>Prova que faz o que foi pedido e que aguenta o volume previsto.</span></span>")
+        RT -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>contrato aprovado&nbsp;</span>"| IMPL
+        IMPL -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>integração contínua verde&nbsp;</span>"| TEST
     end
 
-    GR("<span style='display:inline-block;width:400px;text-align:center;line-height:1.45'><span style='font-size:30px;font-weight:700;letter-spacing:2px'>GUARDRAILS</span><br/><br/><span style='font-size:22px'>O que impede a qualidade de depender de disciplina individual.</span></span>")
+    GR("<span style='display:inline-block;width:470px;text-align:center;line-height:1.45'><span style='font-size:36px;font-weight:700;letter-spacing:2px'>GUARDRAILS&nbsp;</span><br/><br/><span style='font-size:26px'>O que impede a qualidade de depender de disciplina individual.</span></span>")
 
-    FIM("<span style='display:inline-block;width:420px;text-align:left;line-height:1.45'><span style='font-size:30px;font-weight:700'>Fechamento</span><br/><br/><span style='font-size:22px'>Spec atualizada, histórico guardado e a métrica cobrada depois.</span></span>")
+    FIM("<span style='display:inline-block;width:490px;text-align:left;line-height:1.45'><span style='font-size:36px;font-weight:700'>Fechamento</span><br/><br/><span style='font-size:26px'>Spec atualizada, histórico guardado e a métrica cobrada depois.</span></span>")
 
-    QE -->|"<span style='font-size:14px'>Definition of Ready</span>"| FILA
+    QE -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>Definition of Ready&nbsp;</span>"| FILA
     FILA --> RT
-    TEST -->|"<span style='font-size:14px'>relatório aprovado</span>"| FIM
+    TEST -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>relatório aprovado&nbsp;</span>"| FIM
     GR -.-> DOWN
 
     class EX,RN,TL,QE up

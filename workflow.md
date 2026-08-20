@@ -39,13 +39,15 @@ flowchart LR
   classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:2px,color:#FFFFFF
   classDef done fill:#FFFFFF,stroke:#5A5A5A,stroke-width:2px,color:#2E2E2E
   classDef gate fill:#F2DDFE,stroke:#F2DDFE,color:#5B4A68,font-size:14px
+  classDef spacer fill:transparent,stroke:transparent,color:transparent
 
-  %% UPSTREAM (coluna)
   subgraph UP["<div style='text-align:center; width:520px;'>
     <div style='font-size:46px; font-weight:900; letter-spacing:2px;'>UPSTREAM</div>
     <div style='font-size:20px; color:#666; margin-top:6px;'>cadência de produto</div>
   </div>"]
     direction TB
+    UPSPACE[" "]
+
     EX["<div style='width:500px; text-align:left; line-height:1.35; padding:6px 2px;'>
       <div style='font-size:44px; font-weight:800;'>⓿ Exploratório</div><br/>
       <div style='font-size:30px;'>Conversas, dados e hipóteses viram<br/>matéria-prima para a IA.</div>
@@ -63,6 +65,7 @@ flowchart LR
       <div style='font-size:30px;'>Pedaços pequenos, cada um demonstrável<br/>sozinho.</div>
     </div>"]
 
+    UPSPACE --> EX
     EX --> RN
     RN --> PRD["PRD aprovado"]
     PRD --> TL
@@ -70,7 +73,6 @@ flowchart LR
     DSG --> QE
   end
 
-  %% Centro
   FILA["<div style='width:360px; text-align:center; line-height:1.35;'>
     <div style='font-size:48px; font-weight:800;'>Estórias prontas</div><br/>
     <div style='font-size:33px;'>Pronto para construir.</div>
@@ -81,12 +83,13 @@ flowchart LR
     <div style='font-size:30px;'>O que impede a qualidade de depender<br/>de disciplina individual.</div>
   </div>"]
 
-  %% DOWNSTREAM (coluna)
   subgraph DOWN["<div style='text-align:center; width:520px;'>
     <div style='font-size:46px; font-weight:900; letter-spacing:2px;'>DOWNSTREAM</div>
     <div style='font-size:20px; color:#666; margin-top:6px;'>cadência de engenharia · N em paralelo</div>
   </div>"]
     direction TB
+    DOWNSPACE[" "]
+
     RT["<div style='width:500px; text-align:left; line-height:1.35; padding:6px 2px;'>
       <div style='font-size:44px; font-weight:800;'>❹ Refinamento Técnico</div><br/>
       <div style='font-size:30px;'>Como construir, com o contrato entre as<br/>stacks fechado antes.</div>
@@ -100,6 +103,7 @@ flowchart LR
       <div style='font-size:30px;'>Prova que faz o que foi pedido e que<br/>aguenta o volume previsto.</div>
     </div>"]
 
+    DOWNSPACE --> RT
     RT --> CTR["contrato aprovado"]
     CTR --> IMPL
     IMPL --> CI["integração contínua verde"]
@@ -111,7 +115,6 @@ flowchart LR
     <div style='font-size:30px;'>Spec atualizada, histórico guardado e a<br/>métrica cobrada depois.</div>
   </div>"]
 
-  %% Conexões horizontais
   QE --> DOR["Definition of Ready"]
   DOR --> FILA
   FILA --> RT
@@ -119,13 +122,13 @@ flowchart LR
   TEST --> RAP["relatório aprovado"]
   RAP --> FIM
 
-  %% Classes
   class EX,RN,TL,QE up
   class RT,IMPL,TEST down
   class FILA queue
   class GR guard
   class FIM done
   class PRD,DSG,DOR,CTR,CI,RAP gate
+  class UPSPACE,DOWNSPACE spacer
 
   style UP fill:#FBFDFE,stroke:#D5E8EF,stroke-width:2px
   style DOWN fill:#FDFEF9,stroke:#DDE9BE,stroke-width:2px

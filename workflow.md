@@ -88,15 +88,28 @@ flowchart LR
 A especificação **não mora onde o código mora**. O ciclo de vida de uma intenção é o ciclo da Estória de negócio, não o ciclo de build de nenhuma stack.
 
 ```
-{product}-specs                  ← repositório de especificação · a fonte da verdade
-├── initiatives/INI-042/         ← PRD, persona, métricas, volumetria, telas
-│   └── stories/PGI-1234/        ← a fila de Estórias
-├── changes/PGI-1234/            ← change OpenSpec: proposal, design, tasks, specs
-├── design-system/               ← tokens e catálogo de componentes, por superfície
-└── specs/                       ← capacidades vivas + technical-debt.md
+{product}-workspace             ← repositório de especificação · a fonte da verdade
+├── initiatives/INI-042/        ← PRD, persona, métricas, volumetria, telas
+│   └── stories/
+          PGI-1234/       ← a fila de Estórias
+├── design-system/              ← tokens e catálogo de componentes, por superfície
+├── openspec                    ← change OpenSpec: proposal, design, tasks, specs
+    ├── changes/PGI-1234/         ← change OpenSpec: proposal, design, tasks
+    └── specs/                    ← capacidades vivas + technical-debt.md
+├── architecture
+    ├── overview.md               ← Descrição dos sistemas/modulos
+    ├── refinement
+        └── specs/
+            └── PGI-1234/ 
+├── clone.sh
+
+##############################
+# Dev executa o clone.sh
+##############################
 
 {product}-backend                ┐
-{product}-bff-app                │
+{product}-bff                    │  BFFs App iBanking
+{product}-ibanking               │  BFFs App iBanking
 {product}-bff-portal             │  repositórios de código
 {product}-ios                    │  cadência e pipeline próprios
 {product}-android                │  amarrados por Change-Id

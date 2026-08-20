@@ -31,54 +31,104 @@ O sistema é composto por **dois laços que giram em velocidades diferentes**, l
 **A fila é o único acoplamento entre os dois.** O Upstream escreve nela, o Downstream lê. Nenhum lado espera o outro terminar — e é isso que impede o modelo de virar cascata com nome novo.
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"18px","lineColor":"#5A5A5A","primaryTextColor":"#2E2E2E"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":50,"rankSpacing":120,"padding":30,"useMaxWidth":false,"subGraphTitleMargin":{"top":18,"bottom":40}}}}%%
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"18px","lineColor":"#6B6B6B","primaryTextColor":"#2E2E2E"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":45,"rankSpacing":95,"padding":30,"useMaxWidth":false}}}%%
 flowchart LR
-    classDef up fill:#EEF4F6,stroke:#7FB3C0,stroke-width:3px,color:#2E2E2E
-    classDef down fill:#F5F8E9,stroke:#A9C46C,stroke-width:3px,color:#2E2E2E
-    classDef queue fill:#FDF4C9,stroke:#E3C534,stroke-width:3px,color:#2E2E2E
-    classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:3px,color:#FFFFFF
-    classDef done fill:#FFFFFF,stroke:#5A5A5A,stroke-width:3px,color:#2E2E2E
+  classDef up fill:#EEF6FA,stroke:#8DC3D6,stroke-width:2px,color:#2E2E2E
+  classDef down fill:#F8FBEF,stroke:#B8CF83,stroke-width:2px,color:#2E2E2E
+  classDef queue fill:#FFF6CF,stroke:#E7C84E,stroke-width:2px,color:#2E2E2E
+  classDef guard fill:#2E2E2E,stroke:#2E2E2E,stroke-width:2px,color:#FFFFFF
+  classDef done fill:#FFFFFF,stroke:#5A5A5A,stroke-width:2px,color:#2E2E2E
+  classDef gate fill:#F2DDFE,stroke:#F2DDFE,color:#5B4A68,font-size:14px
 
-    subgraph UP["<span style='display:inline-block;width:560px;text-align:center;line-height:1.4'><span style='font-size:42px;font-weight:800;letter-spacing:3px'>UPSTREAM&nbsp;</span><br/><span style='font-size:20px;color:#5A5A5A'>cadência de produto</span></span>"]
-        direction TB
-        EX("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>⓿&nbsp;&nbsp;Exploratório</span><br/><br/><span style='font-size:27px'>Conversas, dados e hipóteses viram matéria-prima para a IA.</span></span>")
-        RN("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❶&nbsp;&nbsp;Refinamento de Negócio</span><br/><br/><span style='font-size:27px'>O que resolver, para quem, e qual número precisa mudar.</span></span>")
-        TL("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❷&nbsp;&nbsp;Design de Telas</span><br/><br/><span style='font-size:27px'>Como o cliente vê e usa, em cada plataforma.</span></span>")
-        QE("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❸&nbsp;&nbsp;Quebra em Estórias</span><br/><br/><span style='font-size:27px'>Pedaços pequenos, cada um demonstrável sozinho.</span></span>")
-        EX --> RN
-        RN -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>PRD aprovado&nbsp;</span>"| TL
-        TL -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>design aprovado&nbsp;</span>"| QE
-    end
+  %% UPSTREAM (coluna)
+  subgraph UP["<div style='text-align:center; width:520px;'>
+    <div style='font-size:46px; font-weight:900; letter-spacing:2px;'>UPSTREAM</div>
+    <div style='font-size:20px; color:#666; margin-top:6px;'>cadência de produto</div>
+  </div>"]
+    direction TB
+    EX["<div style='width:500px; text-align:left; line-height:1.35; padding:6px 2px;'>
+      <div style='font-size:44px; font-weight:800;'>⓿ Exploratório</div><br/>
+      <div style='font-size:30px;'>Conversas, dados e hipóteses viram<br/>matéria-prima para a IA.</div>
+    </div>"]
+    RN["<div style='width:500px; text-align:left; line-height:1.35; padding:6px 2px;'>
+      <div style='font-size:44px; font-weight:800;'>❶ Refinamento de Negócio</div><br/>
+      <div style='font-size:30px;'>O que resolver, para quem, e qual número<br/>precisa mudar.</div>
+    </div>"]
+    TL["<div style='width:500px; text-align:left; line-height:1.35; padding:6px 2px;'>
+      <div style='font-size:44px; font-weight:800;'>❷ Design de Telas</div><br/>
+      <div style='font-size:30px;'>Como o cliente vê e usa, em cada<br/>plataforma.</div>
+    </div>"]
+    QE["<div style='width:500px; text-align:left; line-height:1.35; padding:6px 2px;'>
+      <div style='font-size:44px; font-weight:800;'>❸ Quebra em Estórias</div><br/>
+      <div style='font-size:30px;'>Pedaços pequenos, cada um demonstrável<br/>sozinho.</div>
+    </div>"]
 
-    FILA("<span style='display:inline-block;width:400px;text-align:center;line-height:1.45'><span style='font-size:36px;font-weight:700'>Estórias prontas</span><br/><br/><span style='font-size:26px'>Pronto para construir.</span></span>")
+    EX --> RN
+    RN --> PRD["PRD aprovado"]
+    PRD --> TL
+    TL --> DSG["design aprovado"]
+    DSG --> QE
+  end
 
-    subgraph DOWN["<span style='display:inline-block;width:560px;text-align:center;line-height:1.4'><span style='font-size:42px;font-weight:800;letter-spacing:3px'>DOWNSTREAM&nbsp;</span><br/><span style='font-size:20px;color:#5A5A5A'>cadência de engenharia · N em paralelo</span></span>"]
-        direction TB
-        RT("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❹&nbsp;&nbsp;Refinamento Técnico</span><br/><br/><span style='font-size:27px'>Como construir, com o contrato entre as stacks fechado antes.</span></span>")
-        IMPL("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❺&nbsp;&nbsp;Implementação</span><br/><br/><span style='font-size:27px'>Código escrito com o teste antes, em cada stack e em paralelo.</span></span>")
-        TEST("<span style='display:inline-block;width:540px;text-align:left;line-height:1.45'><span style='font-size:38px;font-weight:700'>❻&nbsp;&nbsp;Spec-Driven Testing</span><br/><br/><span style='font-size:27px'>Prova que faz o que foi pedido e que aguenta o volume previsto.</span></span>")
-        RT -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>contrato aprovado&nbsp;</span>"| IMPL
-        IMPL -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>integração contínua verde&nbsp;</span>"| TEST
-    end
+  %% Centro
+  FILA["<div style='width:360px; text-align:center; line-height:1.35;'>
+    <div style='font-size:48px; font-weight:800;'>Estórias prontas</div><br/>
+    <div style='font-size:33px;'>Pronto para construir.</div>
+  </div>"]
 
-    GR("<span style='display:inline-block;width:470px;text-align:center;line-height:1.45'><span style='font-size:36px;font-weight:700;letter-spacing:2px'>GUARDRAILS&nbsp;</span><br/><br/><span style='font-size:26px'>O que impede a qualidade de depender de disciplina individual.</span></span>")
+  GR["<div style='width:420px; text-align:center; line-height:1.35;'>
+    <div style='font-size:48px; font-weight:900; letter-spacing:1px;'>GUARDRAILS</div><br/>
+    <div style='font-size:30px;'>O que impede a qualidade de depender<br/>de disciplina individual.</div>
+  </div>"]
 
-    FIM("<span style='display:inline-block;width:490px;text-align:left;line-height:1.45'><span style='font-size:36px;font-weight:700'>Fechamento</span><br/><br/><span style='font-size:26px'>Spec atualizada, histórico guardado e a métrica cobrada depois.</span></span>")
+  %% DOWNSTREAM (coluna)
+  subgraph DOWN["<div style='text-align:center; width:520px;'>
+    <div style='font-size:46px; font-weight:900; letter-spacing:2px;'>DOWNSTREAM</div>
+    <div style='font-size:20px; color:#666; margin-top:6px;'>cadência de engenharia · N em paralelo</div>
+  </div>"]
+    direction TB
+    RT["<div style='width:500px; text-align:left; line-height:1.35; padding:6px 2px;'>
+      <div style='font-size:44px; font-weight:800;'>❹ Refinamento Técnico</div><br/>
+      <div style='font-size:30px;'>Como construir, com o contrato entre as<br/>stacks fechado antes.</div>
+    </div>"]
+    IMPL["<div style='width:500px; text-align:left; line-height:1.35; padding:6px 2px;'>
+      <div style='font-size:44px; font-weight:800;'>❺ Implementação</div><br/>
+      <div style='font-size:30px;'>Código escrito com o teste antes, em cada<br/>stack e em paralelo.</div>
+    </div>"]
+    TEST["<div style='width:500px; text-align:left; line-height:1.35; padding:6px 2px;'>
+      <div style='font-size:44px; font-weight:800;'>❻ Spec-Driven Testing</div><br/>
+      <div style='font-size:30px;'>Prova que faz o que foi pedido e que<br/>aguenta o volume previsto.</div>
+    </div>"]
 
-    QE -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>Definition of Ready&nbsp;</span>"| FILA
-    FILA --> RT
-    TEST -->|"<span style='display:inline-block;font-size:20px;padding:0 6px'>relatório aprovado&nbsp;</span>"| FIM
-    GR -.-> DOWN
+    RT --> CTR["contrato aprovado"]
+    CTR --> IMPL
+    IMPL --> CI["integração contínua verde"]
+    CI --> TEST
+  end
 
-    class EX,RN,TL,QE up
-    class RT,IMPL,TEST down
-    class FILA queue
-    class GR guard
-    class FIM done
+  FIM["<div style='width:420px; text-align:left; line-height:1.35;'>
+    <div style='font-size:46px; font-weight:800;'>Fechamento</div><br/>
+    <div style='font-size:30px;'>Spec atualizada, histórico guardado e a<br/>métrica cobrada depois.</div>
+  </div>"]
 
-    style UP fill:#FBFCFD,stroke:#C4D9E0,stroke-width:2px
-    style DOWN fill:#FCFDF8,stroke:#D5E3B4,stroke-width:2px
-    linkStyle default stroke:#5A5A5A,stroke-width:2px
+  %% Conexões horizontais
+  QE --> DOR["Definition of Ready"]
+  DOR --> FILA
+  FILA --> RT
+  GR -.-> IMPL
+  TEST --> RAP["relatório aprovado"]
+  RAP --> FIM
+
+  %% Classes
+  class EX,RN,TL,QE up
+  class RT,IMPL,TEST down
+  class FILA queue
+  class GR guard
+  class FIM done
+  class PRD,DSG,DOR,CTR,CI,RAP gate
+
+  style UP fill:#FBFDFE,stroke:#D5E8EF,stroke-width:2px
+  style DOWN fill:#FDFEF9,stroke:#DDE9BE,stroke-width:2px
 ```
 
 ---

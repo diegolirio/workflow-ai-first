@@ -143,13 +143,13 @@ A especificação **não mora onde o código mora**. O ciclo de vida de uma inte
 ```
 {product}-workspace             ← repositório de especificação · a fonte da verdade
 ├── initiatives/
-    ├── INI-042/                ← PRD, persona, métricas, volumetria, telas
-    │   └── stories/
-    │       └── PGI-1234/       ← a fila de Estórias
-    ├── knowledge/
-    │   └── indices.md
-    └── transcripts/             
-        └── 2026-08-13-passagens-contabeis-previdencia.md
+│   ├── INI-042/                ← PRD, persona, métricas, volumetria, telas
+│   │   └── stories/
+│   │       └── PGI-1234/       ← a fila de Estórias
+│   └── transcripts/             
+│       └── 2026-08-13-passagens-contabeis-previdencia.md
+├── knowledge/
+│   └── indices.md
 ├── design-system/              ← tokens e catálogo de componentes, por superfície
 ├── openspec                    ← change OpenSpec: proposal, design, tasks, specs
     ├── changes/PGI-1234/         ← change OpenSpec: proposal, design, tasks

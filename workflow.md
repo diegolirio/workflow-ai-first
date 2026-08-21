@@ -689,6 +689,27 @@ A parte que decide se o processo sobrevive ao contato com a realidade.
 
 O Downstream tem base pronta em modelos de especificação já existentes. O que é genuinamente novo é o **Upstream inteiro** e a **costura multi-repositório**.
 
+## PRDs como conhecimento para POs
+
+```mermaid
+flowchart LR
+    I[🤖 Agente de<br/>Investimentos]:::agent
+    C[🤖 Agente de<br/>CDB]:::agent
+    T[🤖 Agente de<br/>Tesouraria Direta]:::agent
+    P[🤖 Agente de<br/>Passivos Contábeis]:::agent
+    R[🤖 Agente de<br/>Renda Variável]:::agent
+    V[🤖 Agente de<br/>Previdência]:::agent
+    D[PRDs]:::docs
+    I --> C
+    I --> T
+    I --> P
+    I --> R
+    I --> V
+    P --> D
+    classDef agent stroke:#000,stroke-width:0px,font-size:28px;
+    classDef docs fill:#fff,stroke:#1638b3,color:#000,stroke-width:3px;
+```
+
 ---
 
 ## 14. Glossário

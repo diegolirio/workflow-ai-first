@@ -696,7 +696,7 @@ flowchart LR
     I[🤖 Agente de<br/>Investimentos]:::agent
     C[🤖 Agente de<br/>CDB]:::agent
     T[🤖 Agente de<br/>Tesouro Direto]:::agent
-    P[🤖 Agente de<br/>Passivos Contábeis]:::agent
+    P[🤖 Agente de<br/>Passagens Contábeis]:::agent
     R[🤖 Agente de<br/>Renda Variável]:::agent
     V[🤖 Agente de<br/>Previdência]:::agent
     D[PRDs]:::docs

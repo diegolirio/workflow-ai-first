@@ -4,7 +4,7 @@ Modelo de trabalho para iniciar novos projetos, do refinamento de negócio até 
 
 Este documento é um **contrato de agentes**: cada etapa declara entrada, saída, formato de artefato e gate de saída. É legível por humanos e rigoroso o bastante para virar skill sem reescrita.
 
-Essa doc foi baseado no paper do Google →  [](./NEW_SDLC.pdf)
+Essa doc foi baseado no paper do Google →  [Google Paper New SDLC](./NEW_SDLC.pdf)
 
 ---
 

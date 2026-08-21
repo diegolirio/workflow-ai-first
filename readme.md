@@ -695,7 +695,7 @@ O Downstream tem base pronta em modelos de especificação já existentes. O que
 flowchart LR
     I[🤖 Agente de<br/>Investimentos]:::agent
     C[🤖 Agente de<br/>CDB]:::agent
-    T[🤖 Agente de<br/>Tesouraria Direta]:::agent
+    T[🤖 Agente de<br/>Tesouro Direto]:::agent
     P[🤖 Agente de<br/>Passivos Contábeis]:::agent
     R[🤖 Agente de<br/>Renda Variável]:::agent
     V[🤖 Agente de<br/>Previdência]:::agent

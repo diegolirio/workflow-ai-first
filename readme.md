@@ -117,11 +117,11 @@ flowchart LR
     <div style='font-size:30px;'>Spec atualizada, histórico guardado e a<br/>métrica cobrada depois.</div>
   </div>"]
 
-  QE --> DOR["Definition of Ready"]
+  UP --> DOR["Definition of Ready"]
   DOR --> FILA
-  FILA --> RT
-  GR -.-> IMPL
-  TEST --> RAP["relatório aprovado"]
+  FILA --> DOWN
+  GR -.-> DOWN
+  DOWN --> RAP["relatório aprovado"]
   RAP --> FIM
 
   class EX,RN,TL,QE up

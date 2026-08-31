@@ -75,7 +75,7 @@ flowchart LR
 
 A mesma lógica — fases iguais, gargalos e proporções diferentes — é como o Google caracteriza a transição do SDLC tradicional para o AI-Driven:
 
-![SDLC Tradicional vs AI-Driven — Google](diagrams/png/sdlc-comparison.png)
+![SDLC Tradicional vs AI-Driven — Google](./diagrams/png/sdlc-comparison.png)
 
 > **Fonte:** *AI-Driven Software Development Life Cycle* — referência externa que converge com o modelo deste curso: no ciclo AI-Driven, o gargalo migra para a qualidade da especificação, a implementação colapsa de semanas para horas, e a iteração passa de sprints para minutos.
 

@@ -6,7 +6,7 @@
 > **Para times mistos de Product Owners, Desenvolvedores e QAs.**
 >
 > Este curso mostra como agentes de IA transformam cada etapa do ciclo de vida do desenvolvimento de software — do refinamento de negócio até os testes em produção.
-> Você vai acompanhar uma única iniciativa do zero até a entrega: **"Operador cadastra um produto pelo portal"**.
+> Você vai acompanhar uma única iniciativa do zero até a entrega: **"Operador inicia um produto"**.
 
 ---
 
@@ -16,7 +16,7 @@
 >
 > Nunca terceirize suas decisões. Deu certo foi você. Deu errado também foi você.
 
-Essa distinção parece óbvia, mas é onde os times erram. Os agentes de IA podem escrever o PRD, desenhar telas, quebrar estórias, propor arquitetura, escrever código e testes. O que eles não fazem: escolher qual problema resolver, definir o que é aceitável, decidir o que entra em escopo ou assumir o risco.
+Essa distinção parece óbvia, mas é onde os times erram. Os agentes de IA podem escrever o Requirimentos (PRD - Product Requirements Document), desenhar telas, quebrar estórias, propor arquitetura, escrever código e testes. O que eles não fazem: escolher qual problema resolver, definir o que é aceitável, decidir o que entra em escopo ou assumir o risco.
 
 **"Cem por cento implementado por IA" não é "cem por cento decidido por IA."** Confundir as duas coisas é o único jeito garantido de esse modelo falhar.
 
@@ -24,7 +24,7 @@ Os gates ao longo do fluxo existem para tornar visível quem leu, entendeu e ass
 
 ## Regra de materialização
 
-> **Só existe o que está no git.**
+> **Só existe o que está no git (ou ferramenta utilizada para manter as especificações).**
 
 Ferramentas de ideação — Claude Projects, Claude Design — não têm diff, Pull Request nem histórico revisável. São superfícies **descartáveis**.
 
@@ -36,7 +36,7 @@ Nada avança de etapa antes de o resultado ser materializado como arquivo commit
 
 O ciclo de vida do desenvolvimento de software neste modelo funciona em dois ritmos que giram em paralelo, ligados por uma fila.
 
-**Upstream — cadência de produto (semanas).** Pega uma aposta de negócio e a transforma em Estórias prontas para construir. Produto conduz. Agentes de IA escrevem. O PO decide.
+**Upstream — cadência de produto (dias/semanas).** Pega uma aposta de negócio e a transforma em Estórias prontas para construir. Produto conduz. Agentes de IA escrevem. O PO decide.
 
 **Downstream — cadência de engenharia (dias).** Pega uma Estória pronta e a leva até produção com testes. Engenharia conduz. Agentes de IA constroem. O Dev e o QA decidem.
 
@@ -75,7 +75,7 @@ flowchart LR
 
 A mesma lógica — fases iguais, gargalos e proporções diferentes — é como o Google caracteriza a transição do SDLC tradicional para o AI-Driven:
 
-![SDLC Tradicional vs AI-Driven — Google](./diagrams/png/sdlc-comparison.png)
+![SDLC Tradicional vs AI-Driven — Google](diagrams/png/sdlc-comparison.png)
 
 > **Fonte:** *AI-Driven Software Development Life Cycle* — referência externa que converge com o modelo deste curso: no ciclo AI-Driven, o gargalo migra para a qualidade da especificação, a implementação colapsa de semanas para horas, e a iteração passa de sprints para minutos.
 
@@ -571,21 +571,29 @@ Com quatro stacks em jogo (backend, BFF, iOS, Android), a sequência linear mata
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Arial, sans-serif","fontSize":"14px","lineColor":"#6B7280","primaryTextColor":"#111827","primaryColor":"#EEF6FA","primaryBorderColor":"#8DC3D6"}}}%%
 flowchart LR
-  classDef frozen fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a5f
-  classDef stack fill:#f0fdf4,stroke:#86efac,stroke-width:1px,color:#14532d
-  classDef gate fill:#fef9c3,stroke:#ca8a04,stroke-width:2px,color:#78350f
-  classDef test fill:#fdf4ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+  classDef ws     fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a5f,font-weight:bold
+  classDef frozen fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f,font-weight:bold
+  classDef stack  fill:#f0fdf4,stroke:#86efac,stroke-width:1px,color:#14532d
+  classDef web    fill:#f0f9ff,stroke:#7dd3fc,stroke-width:1px,color:#0c4a6e
+  classDef gate   fill:#fdf4ff,stroke:#a855f7,stroke-width:2px,color:#581c87
+  classDef test   fill:#ecfdf5,stroke:#6ee7b7,stroke-width:2px,color:#065f46
 
-  C["🔒 Contrato\ncongelado\n(design.md)"]:::frozen
-  BE["⚙️ Backend"]:::stack
-  BFF["🔀 BFF"]:::stack
-  iOS["📱 iOS"]:::stack
-  AND["🤖 Android"]:::stack
+  WS["📋 {product}-workspace\nEspecificação · fonte da verdade\nPRD · design.md · screens"]:::ws
+  C["🔒 Contrato congelado\ndesign.md"]:::frozen
+
+  BE["⚙️ {product}-backend"]:::stack
+  BFF["🔀 {product}-bffs"]:::stack
+  iOS["📱 {product}-ios"]:::stack
+  AND["🤖 {product}-android"]:::stack
+  WIP["🖥️ {product}-web-internal-portal\nReact · design system interno\n(Claude Design)"]:::web
+  WEB["🌐 {product}-web\nReact · componentes externos\n(Claude Design)"]:::web
+
   M["🔗 Integração\ne merge"]:::gate
   E2E["✅ Testes E2E"]:::test
 
-  C --> BE & BFF & iOS & AND
-  BE & BFF & iOS & AND --> M
+  WS --> C
+  C --> BE & BFF & iOS & AND & WIP & WEB
+  BE & BFF & iOS & AND & WIP & WEB --> M
   M --> E2E
 ```
 

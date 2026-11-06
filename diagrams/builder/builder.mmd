@@ -1,0 +1,62 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Helvetica Neue, Helvetica, Arial, sans-serif","fontSize":"18px","lineColor":"#8A9196","primaryTextColor":"#1A1F24"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":40,"rankSpacing":80,"padding":24,"useMaxWidth":false}}}%%
+flowchart LR
+  %% Builder — Upstream (cadência de produto) alimenta o Downstream (foco: app, web e backend em paralelo)
+  %% Ícones: src relativo a esta pasta; o render.mjs troca por data URI antes de chamar o mmdc.
+  classDef up    fill:#F2F5F6,stroke:#C9D1D5,stroke-width:2px,color:#1A1F24
+  classDef tools fill:#FFFFFF,stroke:#FFFFFF,stroke-width:0px,color:#1A1F24
+  classDef queue fill:#FCEFD6,stroke:#E3A038,stroke-width:3px,color:#1A1F24
+  classDef down  fill:#FFFFFF,stroke:#2C7E80,stroke-width:3px,color:#1A1F24
+  classDef plat  fill:#2C7E80,stroke:#2C7E80,stroke-width:3px,color:#FFFFFF
+  classDef guard fill:#1A1F24,stroke:#1A1F24,stroke-width:2px,color:#FFFFFF
+  classDef ship  fill:#E3A038,stroke:#E3A038,stroke-width:3px,color:#1A1F24
+
+  subgraph UP["<div style='width:580px; text-align:center;'><div style='font-size:40px; font-weight:900; letter-spacing:3px; color:#4D5358;'>UPSTREAM</div><div style='font-size:20px; color:#4D5358;'>cadência de produto</div></div>"]
+    direction TB
+    subgraph TOOLS[" "]
+      direction LR
+      T1["<div style='width:120px; text-align:center;'><img src='icons/metis.png' style='width:92px; height:92px; max-width:none;'/><div style='font-size:22px; font-weight:800; margin-top:6px;'>Metis</div><div style='font-size:16px; color:#4D5358;'>agente PO</div></div>"]
+      T2["<div style='width:120px; text-align:center;'><img src='icons/claude.svg' style='width:92px; height:92px; max-width:none;'/><div style='font-size:22px; font-weight:800; margin-top:6px;'>Claude</div><div style='font-size:16px; color:#4D5358;'>negócio · design</div></div>"]
+      T3["<div style='width:120px; text-align:center;'><img src='icons/jira.svg' style='width:92px; height:92px; max-width:none;'/><div style='font-size:22px; font-weight:800; margin-top:6px;'>Jira</div><div style='font-size:16px; color:#4D5358;'>estórias</div></div>"]
+      T4["<div style='width:120px; text-align:center;'><img src='icons/confluence.svg' style='width:92px; height:92px; max-width:none;'/><div style='font-size:22px; font-weight:800; margin-top:6px;'>Confluence</div><div style='font-size:16px; color:#4D5358;'>documentação</div></div>"]
+      T1 ~~~ T2 ~~~ T3 ~~~ T4
+    end
+    E0["<div style='width:440px; font-size:28px; font-weight:800; text-align:left;'>⓿ Exploratório</div>"]
+    E1["<div style='width:440px; font-size:28px; font-weight:800; text-align:left;'>❶ Refinamento de Negócio</div>"]
+    E2["<div style='width:440px; font-size:28px; font-weight:800; text-align:left;'>❷ Design de Telas</div>"]
+    E3["<div style='width:440px; font-size:28px; font-weight:800; text-align:left;'>❸ Quebra em Estórias</div>"]
+    TOOLS ~~~ E0
+    E0 --> E1 --> E2 --> E3
+  end
+
+  FILA["<div style='width:300px; text-align:center;'><div style='font-size:60px;'>📋</div><div style='font-size:34px; font-weight:800;'>Estórias prontas</div><div style='font-size:20px; color:#4D5358;'>Definition of Ready</div></div>"]
+
+  subgraph DOWN["<div style='width:760px; text-align:center;'><div style='font-size:40px; font-weight:900; letter-spacing:3px; color:#2C7E80;'>DOWNSTREAM · BUILDER</div><div style='font-size:20px; color:#4D5358;'>cadência de engenharia · em paralelo</div></div>"]
+    direction LR
+    RT["<div style='width:240px; text-align:center;'><div style='font-size:52px;'>🔒</div><div style='font-size:28px; font-weight:800;'>❹ Refinamento<br/>Técnico</div><div style='font-size:20px; color:#4D5358;'>contrato congelado</div></div>"]
+    APP["<div style='width:230px; text-align:center;'><div style='font-size:56px;'>📱</div><div style='font-size:34px; font-weight:900;'>App</div><div style='font-size:20px;'>iOS · Android</div></div>"]
+    WEB["<div style='width:230px; text-align:center;'><div style='font-size:56px;'>🌐</div><div style='font-size:34px; font-weight:900;'>Web</div><div style='font-size:20px;'>portal · site</div></div>"]
+    BE["<div style='width:230px; text-align:center;'><div style='font-size:56px;'>⚙️</div><div style='font-size:34px; font-weight:900;'>Backend</div><div style='font-size:20px;'>API · BFF</div></div>"]
+    INT["<div style='width:220px; text-align:center;'><div style='font-size:52px;'>🔗</div><div style='font-size:28px; font-weight:800;'>Integração<br/>e merge</div></div>"]
+    SDT["<div style='width:230px; text-align:center;'><div style='font-size:52px;'>✅</div><div style='font-size:28px; font-weight:800;'>❻ Spec-Driven<br/>Testing</div></div>"]
+    RT --> BE & WEB & APP
+    BE & WEB & APP --> INT
+    INT --> SDT
+  end
+
+  ENT["<div style='width:200px; text-align:center;'><div style='font-size:60px;'>🚀</div><div style='font-size:34px; font-weight:900;'>Entrega</div><div style='font-size:20px;'>produto ou feature</div></div>"]
+
+  GR["<div style='width:520px; text-align:center;'><div style='font-size:30px; font-weight:900; letter-spacing:2px;'>🛡️ GUARDRAILS</div><div style='font-size:20px; margin-top:6px;'>constituição · skills · agentes · testes na pipeline</div></div>"]
+
+  UP --> FILA --> DOWN --> ENT
+  GR -.-> DOWN
+
+  class E0,E1,E2,E3 up
+  class T1,T2,T3,T4 tools
+  class FILA queue
+  class RT,INT,SDT down
+  class APP,WEB,BE plat
+  class GR guard
+  class ENT ship
+  style TOOLS fill:#FFFFFF,stroke:#C9D1D5,stroke-width:2px
+  style UP fill:#FAFBFB,stroke:#C9D1D5,stroke-width:2px
+  style DOWN fill:#EEF7F7,stroke:#2C7E80,stroke-width:3px

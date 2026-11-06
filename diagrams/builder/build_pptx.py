@@ -406,6 +406,7 @@ MARCOS = [  # (nome, datas, início, fim inclusivo, cor, em aberto, etapas do ch
     ("Banco de dados (infra)", "desde 30/10", date(2026, 10, 30), CORTE, AGUARDANDO, True,
      [date(2026, 10, 30), date(2026, 11, 3), date(2026, 11, 4)]),
     ("Disponibilizado em QA", "06/11 – 09/11 (prev.)", date(2026, 11, 6), date(2026, 11, 9), ANDAMENTO, False, []),
+    ("Teste end-to-end", "não iniciado", None, None, None, False, []),
 ]
 
 tl, _ = novo_slide("LINHA DO TEMPO", "Quatro entregas concluídas em até 3 dias úteis cada")
@@ -434,7 +435,7 @@ for cor, nome, tipo in [(CONCLUIDO, "Concluído", "barra"), (ANDAMENTO, "Em anda
 cx0, cx1 = Inches(3.75), prs.slide_width - Inches(0.55)
 dw = (cx1 - cx0) / DIAS
 ay = Inches(2.45)
-y_rows, rh8 = Inches(2.8), Inches(0.5)
+y_rows, rh8 = Inches(2.8), Inches(0.44)
 y_fim = y_rows + rh8 * len(MARCOS)
 for k in range(DIAS):
     d = INICIO + timedelta(k)
@@ -449,8 +450,16 @@ for k in range(DIAS + 1):
     g.line.color.rgb = RGBColor.from_string("E3E7EA"); g.line.width = Pt(0.75)
 
 # Barras.
+xc_fim = Emu(int(cx0 + (dia(CORTE) + 1) * dw))   # posição do corte (fim de 06/11)
 for i, (nome, datas, ini, fim, cor, aberto, etapas) in enumerate(MARCOS):
     y = y_rows + i * rh8
+    if ini is None:  # marco ainda não iniciado: só o rótulo, sem barra
+        texto(tl, Inches(0.93), y, Inches(2.8), rh8, [
+            (nome, 12, True, ESCURO), (datas, 10, False, CINZA)], ancora=MSO_ANCHOR.MIDDLE)
+        tf_ni = texto(tl, xc_fim + Inches(0.1), y, Inches(2.0), rh8, [("não iniciado", 11, True, CINZA)],
+                      ancora=MSO_ANCHOR.MIDDLE)
+        tf_ni.paragraphs[0].runs[0].font.italic = True
+        continue
     n_uteis = dias_uteis(ini, fim)
     texto(tl, Inches(0.93), y, Inches(2.8), rh8, [
         (nome, 12, True, ESCURO),
@@ -501,7 +510,8 @@ notas(tl, (
     "Em andamento: definições de negócio, prevista até 06/11, e api-cdb desde 04/11.\n"
     "Banco de dados (infra) segue o fluxo do chamado com o time de banco; os losangos são as etapas "
     "(30/10, 03/11 e 04/11).\n"
-    "Próximo marco: disponibilizar em QA, previsto de 06/11 a 09/11 (2 dias úteis)."
+    "Próximo marco: disponibilizar em QA, previsto de 06/11 a 09/11 (2 dias úteis). "
+    "Depois vem o teste end-to-end, ainda não iniciado."
 ))
 
 

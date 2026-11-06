@@ -1,4 +1,4 @@
-"""Gera builder.pptx a partir do deck workflow-proposta-novos-projetos-v2.pptx.
+"""Gera build-invest-campaign-v1.pptx a partir do deck workflow-proposta-novos-projetos-v2.pptx.
 
 Mantém a capa institucional e o modelo de slide (kicker + título + imagem) do deck base,
 troca os textos e coloca o diagrama do Builder (diagrams/png/builder-upstream-downstream.png).
@@ -25,7 +25,7 @@ EM_ACAO = ROOT / "diagrams/png/builder-downstream-em-acao.png"
 IBANKING = ROOT / "diagrams/png/builder-downstream-ibanking.png"
 CLAUDE_DESIGN = ROOT / "diagrams/png/builder-claude-design.png"
 RIO = ROOT / "diagrams/png/builder-rio-circulo.png"
-SAIDA = ROOT / "builder.pptx"
+SAIDA = ROOT / "build-invest-campaign-v1.pptx"
 
 CAPA = 0          # slide 1 do deck base: capa institucional
 PIPELINE = 2      # slide 3 do deck base: kicker + título + imagem (Upstream/Downstream)
@@ -55,7 +55,7 @@ capa, pipe = prs.slides[CAPA], prs.slides[PIPELINE]
 
 # ---------- Slide 1: capa ----------
 sh = {s.name: s for s in capa.shapes}
-trocar_runs(sh["Title 1"].text_frame.paragraphs[0], "Builder", "", "App · Web · Backend")
+trocar_runs(sh["Title 1"].text_frame.paragraphs[0], "100% Builder", "", "App · Web · Backend")
 trocar_runs(sh["Subtitle 2"].text_frame.paragraphs[0], "Da ideia à entrega de produtos e features, com IA")
 tb3 = sh["TextBox 3"].text_frame.paragraphs
 trocar_runs(tb3[0], "Uma estória, três frentes")
@@ -149,6 +149,55 @@ def forma(slide, tipo, x, y, w, h, preenchimento=None, linha=None, espessura=1.0
         f.line.fill.background()
     f.shadow.inherit = False
     return f
+
+
+# ---------- Capa: desenho simples de App e Backend, dentro do círculo amarelo ----------
+def desenho_capa(slide):
+    escuro, agua, teal = "1A1F24", "9ED5D6", "2C7E80"
+    # Celular.
+    px, py, pw, ph = Inches(9.15), Inches(3.85), Inches(1.25), Inches(2.3)
+    corpo = forma(slide, MSO_SHAPE.ROUNDED_RECTANGLE, px, py, pw, ph, preenchimento=escuro)
+    corpo.adjustments[0] = 0.16
+    tela = forma(slide, MSO_SHAPE.ROUNDED_RECTANGLE, px + Inches(0.1), py + Inches(0.28), pw - Inches(0.2), ph - Inches(0.5),
+                 preenchimento="FFFFFF")
+    tela.adjustments[0] = 0.08
+    forma(slide, MSO_SHAPE.ROUNDED_RECTANGLE, px + pw / 2 - Inches(0.22), py + Inches(0.1), Inches(0.44), Inches(0.09),
+          preenchimento="4D5358").adjustments[0] = 0.5
+    tx, tw = px + Inches(0.2), pw - Inches(0.4)
+    forma(slide, MSO_SHAPE.ROUNDED_RECTANGLE, tx, py + Inches(0.42), tw, Inches(0.42), preenchimento=teal).adjustments[0] = 0.15
+    for k in range(3):
+        forma(slide, MSO_SHAPE.ROUNDED_RECTANGLE, tx, py + Inches(0.98 + k * 0.3), tw * (0.9 - 0.2 * (k % 2)), Inches(0.14),
+              preenchimento=agua).adjustments[0] = 0.5
+    forma(slide, MSO_SHAPE.ROUNDED_RECTANGLE, tx, py + ph - Inches(0.48), tw, Inches(0.2),
+          preenchimento="E3A038").adjustments[0] = 0.5
+
+    # Servidor (três gavetas).
+    sx, sy, sw, gh, gg = Inches(11.45), Inches(4.15), Inches(1.5), Inches(0.5), Inches(0.12)
+    for k in range(3):
+        y = sy + k * (gh + gg)
+        forma(slide, MSO_SHAPE.ROUNDED_RECTANGLE, sx, y, sw, gh, preenchimento=escuro).adjustments[0] = 0.18
+        for j in range(2):
+            forma(slide, MSO_SHAPE.OVAL, sx + Inches(0.15 + j * 0.2), y + gh / 2 - Inches(0.06), Inches(0.12), Inches(0.12),
+                  preenchimento=agua if j == 0 else "E3A038")
+        forma(slide, MSO_SHAPE.ROUNDED_RECTANGLE, sx + Inches(0.65), y + gh / 2 - Inches(0.04), sw - Inches(0.85), Inches(0.08),
+              preenchimento="4D5358").adjustments[0] = 0.5
+
+    # Conexão entre os dois.
+    ly = sy + Inches(0.86)
+    con = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, px + pw + Inches(0.08), ly, sx - Inches(0.08), ly)
+    con.line.color.rgb = RGBColor.from_string(teal); con.line.width = Pt(3); con.line.dash_style = MSO_LINE.DASH
+    ln = con.line._get_or_add_ln()
+    ln.append(ln.makeelement(qn("a:headEnd"), {"type": "triangle", "w": "med", "len": "med"}))
+    ln.append(ln.makeelement(qn("a:tailEnd"), {"type": "triangle", "w": "med", "len": "med"}))
+
+    # Rótulos.
+    texto(slide, px - Inches(0.2), py + ph + Inches(0.08), pw + Inches(0.4), Inches(0.4),
+          [("App", 18, True, escuro)], PP_ALIGN.CENTER)
+    texto(slide, sx - Inches(0.1), py + ph + Inches(0.08), sw + Inches(0.2), Inches(0.4),
+          [("Backend", 18, True, escuro)], PP_ALIGN.CENTER)
+
+
+desenho_capa(capa)
 
 
 def slide_pratica(kicker, titulo_slide, imagem, cards, texto_notas):

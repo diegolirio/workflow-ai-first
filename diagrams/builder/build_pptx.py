@@ -458,7 +458,7 @@ MARCOS = [  # (nome, datas, início, fim inclusivo, cor, em aberto, etapas do ch
     ("Teste end-to-end", "não iniciado", None, None, None, False, []),
 ]
 
-tl, _ = novo_slide("LINHA DO TEMPO", "Quatro entregas concluídas em até 3 dias úteis cada")
+tl, _ = novo_slide("LINHA DO TEMPO", "Piloto em andamento: marcos em dias úteis")
 texto(tl, Inches(0.93), Inches(1.5), Inches(11.5), Inches(0.4),
       [("Piloto da campanha de investimentos · dados dos commits · corte em 06/11 · contagem em dias úteis",
         13, False, CINZA)])
